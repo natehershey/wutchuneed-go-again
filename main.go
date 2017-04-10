@@ -2,20 +2,31 @@ package main
 
 import "fmt"
 import "net/http"
-import "html/template"
+import "github.com/gorilla/mux"
 
 func main() {
-	fmt.Println("Whazzup?")
-
-	templates := template.Must(template.ParseFiles("templates/index.html"))
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		err := templates.ExecuteTemplate(w, "index.html", nil)
-
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
-	})
+	r := mux.NewRouter()
+	r.HandleFunc("/", HomeHandler)
+	r.HandleFunc("/lists", ListsHandler)
+	r.HandleFunc("/categories", CategoriesHandler)
+	r.HandleFunc("/items", ItemsHandler)
+	http.Handle("/", r)
 
 	fmt.Println(http.ListenAndServe(":8081", nil))
+}
+
+func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Home")
+}
+
+func ListsHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Lists")
+}
+
+func CategoriesHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Categories")
+}
+
+func ItemsHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Items")
 }
