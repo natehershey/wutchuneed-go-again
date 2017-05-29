@@ -47,8 +47,6 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", HomeHandler)
 	r.HandleFunc("/lists", ListsHandler)
-	r.HandleFunc("/categories", CategoriesHandler)
-	r.HandleFunc("/items", ItemsHandler)
 	http.Handle("/", r)
 	fmt.Println(http.ListenAndServe("localhost:8081", nil))
 }
@@ -63,24 +61,24 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	// os.Stdout.Write(json)
-	// fmt.Printf("ListsJson: %s\n", json)
-	// fmt.Print(w, json)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(json)
 }
 
 func ListsHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Lists")
-}
+	fmt.Printf("Get lists\n")
+	allLists := getLists()
+	fmt.Printf("Found: %+v\n", allLists)
 
-func CategoriesHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Categories")
-}
+	json, err := json.Marshal(allLists)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
-func ItemsHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Items")
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(json)
 }
 
 func getLists() []List {
@@ -136,7 +134,6 @@ func getCategoriesForList(l List) []Category {
 		c.Items = getItemsForCategory(l, c)
 
 		foundCategories = append(foundCategories, c)
-		// fmt.Fprintf(w, "Name: %s, ID: %d, type: %s", l.name, l.id, l.listType)
 	}
 	return foundCategories
 }
