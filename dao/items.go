@@ -1,12 +1,13 @@
-package data
+package dao
 
 import (
+	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 )
 
-func GetItems() []Item {
+func GetItems() ([]Item, error) {
 	log.Print("SELECT id, name, quantity, measure, status FROM items;")
 	rows, err := db.Query("SELECT id, name, quantity, measure, status FROM items;")
 
@@ -15,7 +16,7 @@ func GetItems() []Item {
 	}
 	defer rows.Close()
 	fmt.Printf("got rows\n")
-	foundItems = []Item{}
+	foundItems := []Item{}
 
 	for rows.Next() {
 		var i Item
@@ -29,10 +30,23 @@ func GetItems() []Item {
 		foundItems = append(foundItems, i)
 		fmt.Printf("Name: %s, ID: %d, status: %s", i.ItemName, i.Id, i.Status)
 	}
-	return foundItems
+	return foundItems, err
 }
 
-func getItemsForCategoryAndList(l List, c Category) []Item {
+func GetItem(id int) (Item, error) {
+	log.Print("SELECT id, name, quantity, measure, status FROM items WHERE id = %d;", id)
+	var i Item
+	err := db.QueryRow("SELECT id, name, quantity, measure, status FROM items where id = ?;", id).Scan(&i.Id, &i.ItemName, &i.Quantity, &i.Measure, &i.Status)
+	switch {
+	case err == sql.ErrNoRows:
+		log.Printf("No item with id %d.", id)
+	case err != nil:
+		log.Fatal(err)
+	}
+	return i, err
+}
+
+func getItemsForCategoryAndList(l List, c Category) ([]Item, error) {
 	log.Print("select id, name, quantity, measure, status from items where category_id = %s;", c.Id)
 	rows, err := db.Query("SELECT id, name, quantity, measure, status FROM items WHERE list_id = ? AND category_id = ?;", l.Id, c.Id)
 
@@ -41,7 +55,8 @@ func getItemsForCategoryAndList(l List, c Category) []Item {
 	}
 	defer rows.Close()
 	fmt.Printf("got rows\n")
-	foundItems = []Item{}
+
+	var foundItems []Item
 
 	for rows.Next() {
 		var i Item
@@ -55,10 +70,10 @@ func getItemsForCategoryAndList(l List, c Category) []Item {
 		foundItems = append(foundItems, i)
 		fmt.Printf("Name: %s, ID: %d, status: %s", i.ItemName, i.Id, i.Status)
 	}
-	return foundItems
+	return foundItems, err
 }
 
-func getItemsForCategory(c Category) []Item {
+func getItemsForCategory(c Category) ([]Item, error) {
 	log.Print("select id, name, quantity, measure, status from items where category_id = %s;", c.Id)
 	rows, err := db.Query("SELECT id, name, quantity, measure, status FROM items WHERE category_id = ?;", c.Id)
 
@@ -67,7 +82,8 @@ func getItemsForCategory(c Category) []Item {
 	}
 	defer rows.Close()
 	fmt.Printf("got rows\n")
-	foundItems = []Item{}
+
+	var foundItems []Item
 
 	for rows.Next() {
 		var i Item
@@ -81,5 +97,5 @@ func getItemsForCategory(c Category) []Item {
 		foundItems = append(foundItems, i)
 		fmt.Printf("Name: %s, ID: %d, status: %s", i.ItemName, i.Id, i.Status)
 	}
-	return foundItems
+	return foundItems, err
 }

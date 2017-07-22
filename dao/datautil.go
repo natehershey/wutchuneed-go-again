@@ -1,16 +1,20 @@
-package data
+package dao
 
 import (
 	"database/sql"
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 )
 
 var err error
 var db *sql.DB
-var foundLists = []List{}
-var foundCategories = []Category{}
-var foundItems = []Item{}
+
+// var foundLists = []List{}
+// var foundCategories = []Category{}
+// var foundItems = []Item{}
+
+var listDeleteStmt *sql.Stmt
 
 type List struct {
 	Id         int        `json:"id"`
@@ -36,7 +40,12 @@ type Item struct {
 	ListId     int            `json:"listId"`
 }
 
+func Init() {
+	getDbConnection()
+}
+
 func getDbConnection() {
+	fmt.Println("Open DB Connection")
 	db, err = sql.Open("mysql", "root@tcp(localhost:3306)/wutchuneed")
 
 	if err != nil {
@@ -45,8 +54,4 @@ func getDbConnection() {
 	if err = db.Ping(); err != nil {
 		log.Fatal(err)
 	}
-}
-
-func Init() {
-	getDbConnection()
 }
