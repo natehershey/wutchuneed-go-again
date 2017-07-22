@@ -12,7 +12,8 @@ func GetCategories() ([]Category, error) {
 	rows, err := db.Query("select id, name, list_id from categories;")
 
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
+		return []Category{}, err
 	}
 	defer rows.Close()
 
@@ -23,10 +24,14 @@ func GetCategories() ([]Category, error) {
 
 		err = rows.Scan(&c.Id, &c.CategoryName, &c.ListId)
 		if err != nil {
-			log.Fatal(err)
+			return []Category{}, err
 		}
 
 		c.Items, err = getItemsForCategory(c)
+		if err != nil {
+			log.Print(err)
+			return []Category{}, err
+		}
 
 		foundCategories = append(foundCategories, c)
 	}
@@ -41,20 +46,26 @@ func GetCategory(id int) (Category, error) {
 	switch {
 	case err == sql.ErrNoRows:
 		log.Printf("No category with id %d.", id)
+		return Category{}, nil
 	case err != nil:
-		log.Fatal(err)
+		log.Print(err)
+		return Category{}, nil
 	}
 
 	c.Items, err = getItemsForCategory(c)
+	if err != nil {
+		log.Print(err)
+	}
 	return c, err
 }
 
 func getCategoriesForList(l List) ([]Category, error) {
 	fmt.Printf("getCategoriesForList(l List)\n")
-	rows, err := db.Query("select id, name from categories where list_id = ?;", l.Id)
 
+	rows, err := db.Query("select id, name, list_id from categories where list_id = ?;", l.Id)
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
+		return []Category{}, err
 	}
 	defer rows.Close()
 
@@ -63,12 +74,15 @@ func getCategoriesForList(l List) ([]Category, error) {
 	for rows.Next() {
 		var c Category
 
-		err = rows.Scan(&c.Id, &c.CategoryName)
+		err = rows.Scan(&c.Id, &c.CategoryName, &c.ListId)
 		if err != nil {
-			log.Fatal(err)
+			log.Print(err)
 		}
 
 		c.Items, err = getItemsForCategoryAndList(l, c)
+		if err != nil {
+			log.Print(err)
+		}
 
 		foundCategories = append(foundCategories, c)
 	}

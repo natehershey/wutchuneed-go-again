@@ -62,7 +62,8 @@ func GetListHandler(w http.ResponseWriter, r *http.Request) {
 
 	list, err := dao.GetList(id)
 	if err != nil {
-		log.Print(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	} else {
 		fmt.Printf("Found: %+v\n", list)
 
@@ -84,7 +85,8 @@ func PostListHandler(w http.ResponseWriter, r *http.Request) {
 	list, err := dao.CreateList(body)
 
 	if err != nil {
-		log.Print(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	} else {
 
 		json, err := json.Marshal(list)
@@ -101,16 +103,21 @@ func PostListHandler(w http.ResponseWriter, r *http.Request) {
 func CategoriesHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("Get categories\n")
 	allCategories, err := dao.GetCategories()
-	fmt.Printf("Found: %+v\n", allCategories)
-
-	json, err := json.Marshal(allCategories)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
-	}
+	} else {
+		fmt.Printf("Found: %+v\n", allCategories)
 
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(json)
+		json, err := json.Marshal(allCategories)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(json)
+	}
 }
 
 func CategoryHandler(w http.ResponseWriter, r *http.Request) {
@@ -125,30 +132,39 @@ func CategoryHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("Geting category %d\n", id)
 	category, err := dao.GetCategory(id)
 	fmt.Printf("Found: %+v\n", category)
-
-	json, err := json.Marshal(category)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
-	}
+	} else {
+		json, err := json.Marshal(category)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(json)
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(json)
+	}
 }
 
 func ItemsHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("Get items\n")
 	allItems, err := dao.GetItems()
-	fmt.Printf("Found: %+v\n", allItems)
-
-	json, err := json.Marshal(allItems)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
-	}
+	} else {
+		fmt.Printf("Found: %+v\n", allItems)
 
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(json)
+		json, err := json.Marshal(allItems)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(json)
+	}
 }
 
 func ItemHandler(w http.ResponseWriter, r *http.Request) {
@@ -162,14 +178,19 @@ func ItemHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Printf("Get item(%d)\n", id)
 	item, err := dao.GetItem(id)
-	fmt.Printf("Found: %+v\n", item)
-
-	json, err := json.Marshal(item)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
-	}
+	} else {
+		fmt.Printf("Found: %+v\n", item)
 
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(json)
+		json, err := json.Marshal(item)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(json)
+	}
 }

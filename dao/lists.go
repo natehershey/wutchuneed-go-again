@@ -16,7 +16,7 @@ func GetLists() ([]List, error) {
 	rows, err := db.Query("select id, name, list_type from lists;")
 
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	defer rows.Close()
 	fmt.Printf("select finished\n")
@@ -27,12 +27,15 @@ func GetLists() ([]List, error) {
 		fmt.Printf("Scanning rows\n")
 		err = rows.Scan(&l.Id, &l.ListName, &l.ListType)
 		if err != nil {
-			log.Fatal(err)
+			return nil, err
 		}
 
 		fmt.Printf("Finished scanning rows\n")
 
 		l.Categories, err = getCategoriesForList(l)
+		if err != nil {
+			return nil, err
+		}
 
 		foundLists = append(foundLists, l)
 	}
@@ -50,10 +53,13 @@ func GetList(id int) (List, error) {
 	case err == sql.ErrNoRows:
 		log.Printf("No list with id %d.", id)
 	case err != nil:
-		log.Fatal(err)
+		return List{}, err
 	}
 
 	list.Categories, err = getCategoriesForList(list)
+	if err != nil {
+		return List{}, err
+	}
 
 	return list, err
 }
@@ -64,24 +70,29 @@ func CreateList(body []byte) (List, error) {
 	var list List
 	unmarshalErr := json.Unmarshal(body, &list)
 	if unmarshalErr != nil {
-		log.Fatal(unmarshalErr)
+		log.Print(unmarshalErr)
+		return List{}, unmarshalErr
 	}
 
 	stmt, prepErr := db.Prepare("INSERT INTO lists(name, list_type, created_at) VALUES(?,?, NOW())")
 	if prepErr != nil {
-		log.Fatal(prepErr)
+		log.Print(prepErr)
+		return List{}, prepErr
 	}
 	res, insertErr := stmt.Exec(list.ListName, list.ListType)
 	if insertErr != nil {
-		log.Fatal(insertErr)
+		log.Print(insertErr)
+		return List{}, insertErr
 	}
 	lastId, lastIdErr := res.LastInsertId()
 	if lastIdErr != nil {
-		log.Fatal(lastIdErr)
+		log.Print(lastIdErr)
+		return List{}, lastIdErr
 	}
 	queryErr := db.QueryRow("SELECT id, name, list_type FROM lists WHERE id=?;", lastId).Scan(&list.Id, &list.ListName, &list.ListType)
 	if queryErr != nil {
-		log.Fatal(queryErr)
+		log.Print(queryErr)
+		return List{}, queryErr
 	}
 	return list, err
 }
