@@ -9,32 +9,23 @@ import (
 )
 
 func GetLists() ([]List, error) {
-	fmt.Printf("'select id, name, list_type from lists;' in GetLists()\n")
-
-	var foundLists []List
-
-	rows, err := db.Query("select id, name, list_type from lists;")
-
+	rows, err := db.Query("select id, name, list_type, created_at, updated_at from lists;")
 	if err != nil {
-		return nil, err
+		return []List{}, err
 	}
 	defer rows.Close()
-	fmt.Printf("select finished\n")
 
+	var foundLists = []List{}
 	for rows.Next() {
 		var l List
-
-		fmt.Printf("Scanning rows\n")
-		err = rows.Scan(&l.Id, &l.ListName, &l.ListType)
+		err = rows.Scan(&l.Id, &l.Name, &l.Type, &l.CreatedAt, &l.UpdatedAt)
 		if err != nil {
-			return nil, err
+			log.Print(err)
 		}
-
-		fmt.Printf("Finished scanning rows\n")
 
 		l.Categories, err = getCategoriesForList(l)
 		if err != nil {
-			return nil, err
+			log.Print(err)
 		}
 
 		foundLists = append(foundLists, l)
@@ -44,10 +35,8 @@ func GetLists() ([]List, error) {
 }
 
 func GetList(id int) (List, error) {
-	fmt.Printf("'select id, name, list_type from lists where id = %d;' in GetLists()\n", id)
-
 	var list List
-	err := db.QueryRow("SELECT id, name, list_type FROM lists WHERE id=?;", id).Scan(&list.Id, &list.ListName, &list.ListType)
+	err := db.QueryRow("SELECT id, name, list_type, created_at, updated_at FROM lists WHERE id=?;", id).Scan(&list.Id, &list.Name, &list.Type, &list.CreatedAt, &list.UpdatedAt)
 
 	switch {
 	case err == sql.ErrNoRows:
@@ -65,8 +54,6 @@ func GetList(id int) (List, error) {
 }
 
 func CreateList(body []byte) (List, error) {
-	fmt.Println("Inserting list %v\n", body)
-
 	var list List
 	unmarshalErr := json.Unmarshal(body, &list)
 	if unmarshalErr != nil {
@@ -79,7 +66,7 @@ func CreateList(body []byte) (List, error) {
 		log.Print(prepErr)
 		return List{}, prepErr
 	}
-	res, insertErr := stmt.Exec(list.ListName, list.ListType)
+	res, insertErr := stmt.Exec(list.Name, list.Type)
 	if insertErr != nil {
 		log.Print(insertErr)
 		return List{}, insertErr
@@ -89,14 +76,36 @@ func CreateList(body []byte) (List, error) {
 		log.Print(lastIdErr)
 		return List{}, lastIdErr
 	}
-	queryErr := db.QueryRow("SELECT id, name, list_type FROM lists WHERE id=?;", lastId).Scan(&list.Id, &list.ListName, &list.ListType)
+	queryErr := db.QueryRow("SELECT id, name, list_type, created_at, updated_at FROM lists WHERE id=?;", lastId).Scan(&list.Id, &list.Name, &list.Type, &list.CreatedAt, &list.UpdatedAt)
 	if queryErr != nil {
 		log.Print(queryErr)
 		return List{}, queryErr
 	}
-	return list, err
+	return list, nil
 }
 
-func DeleteList(body []byte) (bool, error) {
-	return false, err
+func DeleteList(id int) (bool, error) {
+	if id <= 0 {
+		return false, fmt.Errorf("Bad list ID: %d", id)
+	}
+
+	stmt, err := db.Prepare("DELETE FROM lists WHERE id = ?;")
+	if err != nil {
+		log.Print(err)
+		return false, err
+	}
+	res, err := stmt.Exec(id)
+	if err != nil {
+		log.Print(err)
+		return false, err
+	}
+	rowsAffected, err := res.RowsAffected()
+	if err != nil {
+		log.Print(err)
+		return false, err
+	}
+	if rowsAffected == 0 {
+		return false, fmt.Errorf("Unable to delete list with ID %d", id)
+	}
+	return true, nil
 }
