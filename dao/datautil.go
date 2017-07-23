@@ -1,9 +1,8 @@
 package dao
 
 import (
-	"database/sql"
-	// "encoding/json"
 	"bytes"
+	"database/sql"
 	"fmt"
 	"github.com/go-sql-driver/mysql"
 	"log"
@@ -12,10 +11,6 @@ import (
 
 var err error
 var db *sql.DB
-
-// var foundLists = []List{}
-// var foundCategories = []Category{}
-// var foundItems = []Item{}
 
 var listDeleteStmt *sql.Stmt
 
@@ -62,7 +57,6 @@ func Init() {
 }
 
 func getDbConnection() {
-	fmt.Println("Open DB Connection")
 	db, err = sql.Open("mysql", "root@tcp(localhost:3306)/wutchuneed?parseTime=true")
 
 	if err != nil {
@@ -86,7 +80,6 @@ func (s *NullString) UnmarshalJSON(data []byte) error {
 
 func (s NullString) MarshalJSON() ([]byte, error) {
 	var buffer bytes.Buffer
-	// buffer := bytes.NewBufferString("\"time\":")
 	if !s.Valid {
 		buffer.WriteString("null")
 	} else {
@@ -99,7 +92,6 @@ func (s NullString) MarshalJSON() ([]byte, error) {
 
 func (t NullTime) MarshalJSON() ([]byte, error) {
 	var buffer bytes.Buffer
-	// buffer := bytes.NewBufferString("\"time\":")
 	if !t.Valid {
 		buffer.WriteString("null")
 	} else {

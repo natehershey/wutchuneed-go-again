@@ -13,6 +13,7 @@ func main() {
 	dao.Init()
 	r := mux.NewRouter()
 	r.HandleFunc("/", routehandlers.HomeHandler)
+	r.HandleFunc("/status", routehandlers.StatusHandler)
 	r.HandleFunc("/lists", routehandlers.GetListsHandler).Methods("GET")
 	r.HandleFunc("/lists/{id:[0-9]+}", routehandlers.GetListHandler).Methods("GET")
 	r.HandleFunc("/lists", routehandlers.PostListHandler).Methods("POST")

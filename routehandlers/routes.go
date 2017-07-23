@@ -18,6 +18,15 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	GetListsHandler(w, r)
 }
 
+func StatusHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+
+	enc := json.NewEncoder(w)
+	response := map[string]bool{"alive": true}
+	enc.Encode(response)
+}
+
 func GetListsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	enc := json.NewEncoder(w)
