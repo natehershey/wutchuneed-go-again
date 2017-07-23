@@ -1,7 +1,6 @@
 package dao
 
 import (
-	"database/sql"
 	"encoding/json"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
@@ -38,10 +37,7 @@ func GetList(id int) (List, error) {
 	var list List
 	err := db.QueryRow("SELECT id, name, list_type, created_at, updated_at FROM lists WHERE id=?;", id).Scan(&list.Id, &list.Name, &list.Type, &list.CreatedAt, &list.UpdatedAt)
 
-	switch {
-	case err == sql.ErrNoRows:
-		log.Printf("No list with id %d.", id)
-	case err != nil:
+	if err != nil {
 		return List{}, err
 	}
 

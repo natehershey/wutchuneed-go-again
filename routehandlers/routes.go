@@ -1,12 +1,11 @@
 package routehandlers
 
 import (
+	"database/sql"
 	"encoding/json"
-	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/natehershey/wutchuneed-go-again/dao"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"strconv"
 )
@@ -20,271 +19,331 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetListsHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	enc := json.NewEncoder(w)
+
 	allLists, err := dao.GetLists()
 	if err != nil {
-		log.Print(err)
-	} else {
-		json, err := json.Marshal(allLists)
-		if err != nil {
-			log.Print(err)
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(json)
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
+		return
 	}
+
+	json, err := json.Marshal(allLists)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
+		return
+	}
+
+	w.Write(json)
 }
 
 func GetListHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
+	w.Header().Set("Content-Type", "application/json")
+	enc := json.NewEncoder(w)
 
-	id, idErr := strconv.Atoi(vars["id"])
-	if idErr != nil {
-		http.Error(w, idErr.Error(), http.StatusInternalServerError)
+	vars := mux.Vars(r)
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
 		return
 	}
 
 	list, err := dao.GetList(id)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	if err == sql.ErrNoRows {
+		w.WriteHeader(http.StatusNotFound)
+		response := map[string]string{"error": "List not found"}
+		enc.Encode(response)
 		return
-	} else {
-
-		json, err := json.Marshal(list)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(json)
 	}
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
+		return
+	}
+
+	json, err := json.Marshal(list)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
+		return
+	}
+
+	w.Write(json)
 }
 
 func PostListHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	enc := json.NewEncoder(w)
+
 	body, _ := ioutil.ReadAll(r.Body)
-
-	fmt.Printf("Creating list %v\n", body)
 	list, err := dao.CreateList(body)
-
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
 		return
-	} else {
-
-		json, err := json.Marshal(list)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(json)
 	}
+
+	json, err := json.Marshal(list)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
+		return
+	}
+
+	w.Write(json)
 }
 
 func DeleteListHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
+	w.Header().Set("Content-Type", "application/json")
+	enc := json.NewEncoder(w)
 
+	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
 		return
 	}
 
 	success, err := dao.DeleteList(id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	} else {
-		w.Header().Set("Content-Type", "application/json")
-		enc := json.NewEncoder(w)
-
-		response := map[string]bool{"success": success}
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
 		enc.Encode(response)
+		return
 	}
+
+	response := map[string]bool{"success": success}
+	enc.Encode(response)
 }
 
 func GetCategoriesHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf("Get categories\n")
+	w.Header().Set("Content-Type", "application/json")
+	enc := json.NewEncoder(w)
+
 	allCategories, err := dao.GetCategories()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
 		return
-	} else {
-		fmt.Printf("Found: %+v\n", allCategories)
-
-		json, err := json.Marshal(allCategories)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(json)
 	}
+
+	json, err := json.Marshal(allCategories)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
+		return
+	}
+
+	w.Write(json)
 }
 
 func GetCategoryHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
+	w.Header().Set("Content-Type", "application/json")
+	enc := json.NewEncoder(w)
 
-	id, idErr := strconv.Atoi(vars["id"])
-
-	if idErr != nil {
-		http.Error(w, idErr.Error(), http.StatusInternalServerError)
-		return
-	}
-	fmt.Printf("Getting category %d\n", id)
-	category, err := dao.GetCategory(id)
-	fmt.Printf("Found: %+v\n", category)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	} else {
-		json, err := json.Marshal(category)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(json)
-	}
-}
-
-func PostCategoryHandler(w http.ResponseWriter, r *http.Request) {
-	body, _ := ioutil.ReadAll(r.Body)
-
-	fmt.Printf("Creating category %v\n", body)
-	category, err := dao.CreateCategory(body)
-
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	} else {
-
-		json, err := json.Marshal(category)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(json)
-	}
-}
-
-func DeleteCategoryHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
+		return
+	}
+
+	category, err := dao.GetCategory(id)
+	if err == sql.ErrNoRows {
+		w.WriteHeader(http.StatusNotFound)
+		response := map[string]string{"error": "Category not found"}
+		enc.Encode(response)
+		return
+	}
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
+		return
+	}
+
+	json, err := json.Marshal(category)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
+		return
+	}
+
+	w.Write(json)
+}
+
+func PostCategoryHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	enc := json.NewEncoder(w)
+
+	body, _ := ioutil.ReadAll(r.Body)
+	category, err := dao.CreateCategory(body)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
+		return
+	}
+
+	json, err := json.Marshal(category)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
+		return
+	}
+
+	w.Write(json)
+}
+
+func DeleteCategoryHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	enc := json.NewEncoder(w)
+
+	vars := mux.Vars(r)
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
 		return
 	}
 
 	success, err := dao.DeleteCategory(id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	} else {
-		w.Header().Set("Content-Type", "application/json")
-		enc := json.NewEncoder(w)
-
-		response := map[string]bool{"success": success}
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
 		enc.Encode(response)
+		return
 	}
+
+	response := map[string]bool{"success": success}
+	enc.Encode(response)
 }
 
 func GetItemsHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf("Get items\n")
+	w.Header().Set("Content-Type", "application/json")
+	enc := json.NewEncoder(w)
+
 	allItems, err := dao.GetItems()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
 		return
-	} else {
-		fmt.Printf("Found: %+v\n", allItems)
-
-		json, err := json.Marshal(allItems)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(json)
 	}
+
+	json, err := json.Marshal(allItems)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
+		return
+	}
+
+	w.Write(json)
 }
 
 func GetItemHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	enc := json.NewEncoder(w)
+
 	vars := mux.Vars(r)
-
-	id, idErr := strconv.Atoi(vars["id"])
-
-	if idErr != nil {
-		http.Error(w, idErr.Error(), http.StatusInternalServerError)
-		return
-	}
-	fmt.Printf("Get item(%d)\n", id)
-	item, err := dao.GetItem(id)
+	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
 		return
-	} else {
-		fmt.Printf("Found: %+v\n", item)
-
-		json, err := json.Marshal(item)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(json)
 	}
+
+	item, err := dao.GetItem(id)
+	if err == sql.ErrNoRows {
+		w.WriteHeader(http.StatusNotFound)
+		response := map[string]string{"error": "Item not found"}
+		enc.Encode(response)
+		return
+	}
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
+		return
+	}
+
+	json, err := json.Marshal(item)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
+		return
+	}
+
+	w.Write(json)
 }
 
 func PostItemHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	enc := json.NewEncoder(w)
+
 	body, _ := ioutil.ReadAll(r.Body)
-
-	fmt.Printf("Creating item %v\n", body)
 	item, err := dao.CreateItem(body)
-
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
 		return
-	} else {
-
-		json, err := json.Marshal(item)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(json)
 	}
+
+	json, err := json.Marshal(item)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
+		return
+	}
+
+	w.Write(json)
 }
 
 func DeleteItemHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
+	w.Header().Set("Content-Type", "application/json")
+	enc := json.NewEncoder(w)
 
+	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		w.WriteHeader(http.StatusBadRequest)
+		response := map[string]string{"error": err.Error()}
+		enc.Encode(response)
 		return
 	}
 
 	success, err := dao.DeleteItem(id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	} else {
-		w.Header().Set("Content-Type", "application/json")
-		enc := json.NewEncoder(w)
-
-		response := map[string]bool{"success": success}
+		w.WriteHeader(http.StatusInternalServerError)
+		response := map[string]string{"error": err.Error()}
 		enc.Encode(response)
+		return
 	}
+	response := map[string]bool{"success": success}
+	enc.Encode(response)
 }

@@ -1,7 +1,6 @@
 package dao
 
 import (
-	"database/sql"
 	"encoding/json"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
@@ -41,13 +40,9 @@ func GetCategories() ([]Category, error) {
 func GetCategory(id int) (Category, error) {
 	var c Category
 	err := db.QueryRow("SELECT id, name, list_id, created_at, updated_at FROM categories WHERE id = ?;", id).Scan(&c.Id, &c.Name, &c.ListId, &c.CreatedAt, &c.UpdatedAt)
-	switch {
-	case err == sql.ErrNoRows:
-		log.Printf("No category with id %d.", id)
-		return Category{}, nil
-	case err != nil:
+	if err != nil {
 		log.Print(err)
-		return Category{}, nil
+		return Category{}, err
 	}
 
 	c.Items, err = getItemsForCategory(c)
@@ -59,6 +54,7 @@ func GetCategory(id int) (Category, error) {
 
 func CreateCategory(body []byte) (Category, error) {
 	var category Category
+
 	unmarshalErr := json.Unmarshal(body, &category)
 	if unmarshalErr != nil {
 		log.Print(unmarshalErr)

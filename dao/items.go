@@ -1,7 +1,6 @@
 package dao
 
 import (
-	"database/sql"
 	"encoding/json"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
@@ -35,10 +34,7 @@ func GetItem(id int) (Item, error) {
 	var i Item
 
 	err := db.QueryRow("SELECT id, name, quantity, measure, status, category_id, list_id FROM items where id = ?;", id).Scan(&i.Id, &i.Name, &i.Quantity, &i.Measure, &i.Status, &i.CategoryId, &i.ListId)
-	switch {
-	case err == sql.ErrNoRows:
-		log.Printf("No item with id %d.", id)
-	case err != nil:
+	if err != nil {
 		log.Print(err)
 		return Item{}, err
 	}
