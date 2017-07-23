@@ -7,8 +7,8 @@ import (
 	"log"
 )
 
-func GetCategories() ([]Category, error) {
-	rows, err := db.Query("select id, name, list_id, created_at, updated_at from categories;")
+func (db Dao) GetCategories() ([]Category, error) {
+	rows, err := db.Db.Query("select id, name, list_id, created_at, updated_at from categories;")
 
 	if err != nil {
 		log.Print(err)
@@ -26,7 +26,7 @@ func GetCategories() ([]Category, error) {
 			return []Category{}, err
 		}
 
-		c.Items, err = getItemsForCategory(c)
+		c.Items, err = db.getItemsForCategory(c)
 		if err != nil {
 			log.Print(err)
 			return []Category{}, err
@@ -37,22 +37,22 @@ func GetCategories() ([]Category, error) {
 	return foundCategories, err
 }
 
-func GetCategory(id int) (Category, error) {
+func (db Dao) GetCategory(id int) (Category, error) {
 	var c Category
-	err := db.QueryRow("SELECT id, name, list_id, created_at, updated_at FROM categories WHERE id = ?;", id).Scan(&c.Id, &c.Name, &c.ListId, &c.CreatedAt, &c.UpdatedAt)
+	err := db.Db.QueryRow("SELECT id, name, list_id, created_at, updated_at FROM categories WHERE id = ?;", id).Scan(&c.Id, &c.Name, &c.ListId, &c.CreatedAt, &c.UpdatedAt)
 	if err != nil {
 		log.Print(err)
 		return Category{}, err
 	}
 
-	c.Items, err = getItemsForCategory(c)
+	c.Items, err = db.getItemsForCategory(c)
 	if err != nil {
 		log.Print(err)
 	}
 	return c, err
 }
 
-func CreateCategory(body []byte) (Category, error) {
+func (db Dao) CreateCategory(body []byte) (Category, error) {
 	var category Category
 
 	unmarshalErr := json.Unmarshal(body, &category)
@@ -61,7 +61,7 @@ func CreateCategory(body []byte) (Category, error) {
 		return Category{}, unmarshalErr
 	}
 
-	stmt, prepErr := db.Prepare("INSERT INTO categories(name, list_id, created_at) VALUES(?,?, NOW())")
+	stmt, prepErr := db.Db.Prepare("INSERT INTO categories(name, list_id, created_at) VALUES(?,?, NOW())")
 	if prepErr != nil {
 		log.Print(prepErr)
 		return Category{}, prepErr
@@ -76,7 +76,7 @@ func CreateCategory(body []byte) (Category, error) {
 		log.Print(lastIdErr)
 		return Category{}, lastIdErr
 	}
-	queryErr := db.QueryRow("SELECT id, name, list_id, created_at, updated_at FROM categories WHERE id=?;", lastId).Scan(&category.Id, &category.Name, &category.ListId, &category.CreatedAt, &category.UpdatedAt)
+	queryErr := db.Db.QueryRow("SELECT id, name, list_id, created_at, updated_at FROM categories WHERE id=?;", lastId).Scan(&category.Id, &category.Name, &category.ListId, &category.CreatedAt, &category.UpdatedAt)
 	if queryErr != nil {
 		log.Print(queryErr)
 		return Category{}, queryErr
@@ -84,12 +84,12 @@ func CreateCategory(body []byte) (Category, error) {
 	return category, nil
 }
 
-func DeleteCategory(id int) (bool, error) {
+func (db Dao) DeleteCategory(id int) (bool, error) {
 	if id <= 0 {
 		return false, fmt.Errorf("Bad category ID: %d", id)
 	}
 
-	stmt, err := db.Prepare("DELETE FROM categories WHERE id = ?;")
+	stmt, err := db.Db.Prepare("DELETE FROM categories WHERE id = ?;")
 	if err != nil {
 		log.Print(err)
 		return false, err
@@ -110,8 +110,8 @@ func DeleteCategory(id int) (bool, error) {
 	return true, nil
 }
 
-func getCategoriesForList(l List) ([]Category, error) {
-	rows, err := db.Query("select id, name, list_id, created_at, updated_at from categories where list_id = ?;", l.Id)
+func (dao Dao) GetCategoriesForList(l List) ([]Category, error) {
+	rows, err := dao.Db.Query("select id, name, list_id, created_at, updated_at from categories where list_id = ?;", l.Id)
 	if err != nil {
 		log.Print(err)
 		return []Category{}, err
@@ -128,7 +128,7 @@ func getCategoriesForList(l List) ([]Category, error) {
 			log.Print(err)
 		}
 
-		c.Items, err = getItemsForCategoryAndList(l, c)
+		c.Items, err = dao.GetItemsForCategoryAndList(l, c)
 		if err != nil {
 			log.Print(err)
 		}

@@ -7,8 +7,8 @@ import (
 	"log"
 )
 
-func GetLists() ([]List, error) {
-	rows, err := db.Query("select id, name, list_type, created_at, updated_at from lists;")
+func (db Dao) GetLists() ([]List, error) {
+	rows, err := db.Db.Query("select id, name, list_type, created_at, updated_at from lists;")
 	if err != nil {
 		return []List{}, err
 	}
@@ -22,7 +22,7 @@ func GetLists() ([]List, error) {
 			log.Print(err)
 		}
 
-		l.Categories, err = getCategoriesForList(l)
+		l.Categories, err = db.GetCategoriesForList(l)
 		if err != nil {
 			log.Print(err)
 		}
@@ -33,15 +33,31 @@ func GetLists() ([]List, error) {
 	return foundLists, err
 }
 
-func GetList(id int) (List, error) {
+// func GetList(id int) (List, error) {
+// 	var list List
+// 	err := db.QueryRow("SELECT id, name, list_type, created_at, updated_at FROM lists WHERE id=?;", id).Scan(&list.Id, &list.Name, &list.Type, &list.CreatedAt, &list.UpdatedAt)
+
+// 	if err != nil {
+// 		return List{}, err
+// 	}
+
+// 	list.Categories, err = getCategoriesForList(list)
+// 	if err != nil {
+// 		return List{}, err
+// 	}
+
+// 	return list, err
+// }
+
+func (db Dao) GetList(id int) (List, error) {
 	var list List
-	err := db.QueryRow("SELECT id, name, list_type, created_at, updated_at FROM lists WHERE id=?;", id).Scan(&list.Id, &list.Name, &list.Type, &list.CreatedAt, &list.UpdatedAt)
+	err := db.Db.QueryRow("SELECT id, name, list_type, created_at, updated_at FROM lists WHERE id=?;", id).Scan(&list.Id, &list.Name, &list.Type, &list.CreatedAt, &list.UpdatedAt)
 
 	if err != nil {
 		return List{}, err
 	}
 
-	list.Categories, err = getCategoriesForList(list)
+	list.Categories, err = db.GetCategoriesForList(list)
 	if err != nil {
 		return List{}, err
 	}
@@ -49,7 +65,7 @@ func GetList(id int) (List, error) {
 	return list, err
 }
 
-func CreateList(body []byte) (List, error) {
+func (db Dao) CreateList(body []byte) (List, error) {
 	var list List
 	unmarshalErr := json.Unmarshal(body, &list)
 	if unmarshalErr != nil {
@@ -57,7 +73,7 @@ func CreateList(body []byte) (List, error) {
 		return List{}, unmarshalErr
 	}
 
-	stmt, prepErr := db.Prepare("INSERT INTO lists(name, list_type, created_at) VALUES(?,?, NOW())")
+	stmt, prepErr := db.Db.Prepare("INSERT INTO lists(name, list_type, created_at) VALUES(?,?, NOW())")
 	if prepErr != nil {
 		log.Print(prepErr)
 		return List{}, prepErr
@@ -72,7 +88,7 @@ func CreateList(body []byte) (List, error) {
 		log.Print(lastIdErr)
 		return List{}, lastIdErr
 	}
-	queryErr := db.QueryRow("SELECT id, name, list_type, created_at, updated_at FROM lists WHERE id=?;", lastId).Scan(&list.Id, &list.Name, &list.Type, &list.CreatedAt, &list.UpdatedAt)
+	queryErr := db.Db.QueryRow("SELECT id, name, list_type, created_at, updated_at FROM lists WHERE id=?;", lastId).Scan(&list.Id, &list.Name, &list.Type, &list.CreatedAt, &list.UpdatedAt)
 	if queryErr != nil {
 		log.Print(queryErr)
 		return List{}, queryErr
@@ -80,12 +96,12 @@ func CreateList(body []byte) (List, error) {
 	return list, nil
 }
 
-func DeleteList(id int) (bool, error) {
+func (db Dao) DeleteList(id int) (bool, error) {
 	if id <= 0 {
 		return false, fmt.Errorf("Bad list ID: %d", id)
 	}
 
-	stmt, err := db.Prepare("DELETE FROM lists WHERE id = ?;")
+	stmt, err := db.Db.Prepare("DELETE FROM lists WHERE id = ?;")
 	if err != nil {
 		log.Print(err)
 		return false, err

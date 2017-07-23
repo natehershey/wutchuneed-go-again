@@ -9,10 +9,16 @@ import (
 	"strings"
 )
 
-var err error
-var db *sql.DB
+type Dao struct {
+	Db            *sql.DB
+	Driver        string
+	ConnectString string
+}
 
-var listDeleteStmt *sql.Stmt
+type WutchuneedDao interface {
+	GetLists() ([]List, error)
+	Init() Dao
+}
 
 type List struct {
 	Id         int        `json:"id"`
@@ -52,19 +58,43 @@ type NullTime struct {
 	mysql.NullTime
 }
 
-func Init() {
-	getDbConnection()
+// func Init() {
+// 	db := getDbConnection()
+// 	return db
+// }
+
+func (dao Dao) Init() Dao {
+	log.Println("dao.Init()")
+
+	dao.Driver = "mysql"
+	dao.ConnectString = "root@tcp(localhost:3306)/wutchuneed?parseTime=true"
+	db, err := dao.getDbConnection()
+	if err != nil {
+		log.Print("Failed in getDbConnection()")
+		log.Print(err.Error())
+		panic(err)
+	}
+	dao.Db = db
+	return dao
 }
 
-func getDbConnection() {
-	db, err = sql.Open("mysql", "root@tcp(localhost:3306)/wutchuneed?parseTime=true")
+func (dao Dao) getDbConnection() (*sql.DB, error) {
+	log.Print("getDbConnection()")
+	log.Print(dao.Driver)
+	log.Print(dao.ConnectString)
+	db, err := sql.Open(dao.Driver, dao.ConnectString)
 
 	if err != nil {
-		log.Fatal(err)
+		log.Print("first", err)
+		panic(err)
 	}
-	if err = db.Ping(); err != nil {
-		log.Fatal(err)
+	log.Print("Pinging the DB")
+	if err := db.Ping(); err != nil {
+		log.Print(err)
+		panic(err)
 	}
+	dao.Db = db
+	return db, nil
 }
 
 func (s *NullString) UnmarshalJSON(data []byte) error {

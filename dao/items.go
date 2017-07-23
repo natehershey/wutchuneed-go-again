@@ -7,8 +7,8 @@ import (
 	"log"
 )
 
-func GetItems() ([]Item, error) {
-	rows, err := db.Query("SELECT id, name, quantity, measure, status, category_id, list_id, created_at, updated_at FROM items;")
+func (db Dao) GetItems() ([]Item, error) {
+	rows, err := db.Db.Query("SELECT id, name, quantity, measure, status, category_id, list_id, created_at, updated_at FROM items;")
 	if err != nil {
 		log.Print(err)
 		return []Item{}, err
@@ -30,10 +30,10 @@ func GetItems() ([]Item, error) {
 	return foundItems, err
 }
 
-func GetItem(id int) (Item, error) {
+func (db Dao) GetItem(id int) (Item, error) {
 	var i Item
 
-	err := db.QueryRow("SELECT id, name, quantity, measure, status, category_id, list_id FROM items where id = ?;", id).Scan(&i.Id, &i.Name, &i.Quantity, &i.Measure, &i.Status, &i.CategoryId, &i.ListId)
+	err := db.Db.QueryRow("SELECT id, name, quantity, measure, status, category_id, list_id FROM items where id = ?;", id).Scan(&i.Id, &i.Name, &i.Quantity, &i.Measure, &i.Status, &i.CategoryId, &i.ListId)
 	if err != nil {
 		log.Print(err)
 		return Item{}, err
@@ -41,7 +41,7 @@ func GetItem(id int) (Item, error) {
 	return i, err
 }
 
-func CreateItem(body []byte) (Item, error) {
+func (db Dao) CreateItem(body []byte) (Item, error) {
 	var item Item
 	unmarshalErr := json.Unmarshal(body, &item)
 	if unmarshalErr != nil {
@@ -49,7 +49,7 @@ func CreateItem(body []byte) (Item, error) {
 		return Item{}, unmarshalErr
 	}
 
-	stmt, prepErr := db.Prepare("INSERT INTO items(name, quantity, measure, status, list_id, category_id, created_at) VALUES(?,?,?,?,?,?,NOW())")
+	stmt, prepErr := db.Db.Prepare("INSERT INTO items(name, quantity, measure, status, list_id, category_id, created_at) VALUES(?,?,?,?,?,?,NOW())")
 	if prepErr != nil {
 		log.Print(prepErr)
 		return Item{}, prepErr
@@ -64,7 +64,7 @@ func CreateItem(body []byte) (Item, error) {
 		log.Print(lastIdErr)
 		return Item{}, lastIdErr
 	}
-	queryErr := db.QueryRow("SELECT id, name, quantity, measure, status, list_id, category_id, created_at, updated_at FROM items WHERE id=?;", lastId).Scan(&item.Id, &item.Name, &item.Quantity, &item.Measure, &item.Status, &item.ListId, &item.CategoryId, &item.CreatedAt, &item.UpdatedAt)
+	queryErr := db.Db.QueryRow("SELECT id, name, quantity, measure, status, list_id, category_id, created_at, updated_at FROM items WHERE id=?;", lastId).Scan(&item.Id, &item.Name, &item.Quantity, &item.Measure, &item.Status, &item.ListId, &item.CategoryId, &item.CreatedAt, &item.UpdatedAt)
 	if queryErr != nil {
 		log.Print(queryErr)
 		return Item{}, queryErr
@@ -72,12 +72,12 @@ func CreateItem(body []byte) (Item, error) {
 	return item, nil
 }
 
-func DeleteItem(id int) (bool, error) {
+func (db Dao) DeleteItem(id int) (bool, error) {
 	if id <= 0 {
 		return false, fmt.Errorf("Bad item ID: %d", id)
 	}
 
-	stmt, err := db.Prepare("DELETE FROM items WHERE id = ?;")
+	stmt, err := db.Db.Prepare("DELETE FROM items WHERE id = ?;")
 	if err != nil {
 		log.Print(err)
 		return false, err
@@ -98,8 +98,32 @@ func DeleteItem(id int) (bool, error) {
 	return true, nil
 }
 
-func getItemsForCategoryAndList(l List, c Category) ([]Item, error) {
-	rows, err := db.Query("SELECT id, name, quantity, measure, status, category_id, list_id, created_at, updated_at FROM items WHERE list_id = ? AND category_id = ?;", l.Id, c.Id)
+func (db Dao) getItemsForCategory(c Category) ([]Item, error) {
+	rows, err := db.Db.Query("SELECT id, name, quantity, measure, status, category_id, list_id, created_at, updated_at FROM items WHERE category_id = ?;", c.Id)
+	if err != nil {
+		log.Print(err)
+		return []Item{}, err
+	}
+	defer rows.Close()
+
+	var foundItems = []Item{}
+	for rows.Next() {
+		var i Item
+
+		err = rows.Scan(&i.Id, &i.Name, &i.Quantity, &i.Measure, &i.Status, &i.CategoryId, &i.ListId, &i.CreatedAt, &i.UpdatedAt)
+		if err != nil {
+			log.Print(err)
+			return []Item{}, err
+		}
+
+		foundItems = append(foundItems, i)
+	}
+	printSlice(foundItems)
+	return foundItems, err
+}
+
+func (db Dao) GetItemsForCategoryAndList(l List, c Category) ([]Item, error) {
+	rows, err := db.Db.Query("SELECT id, name, quantity, measure, status, category_id, list_id, created_at, updated_at FROM items WHERE list_id = ? AND category_id = ?;", l.Id, c.Id)
 	if err != nil {
 		log.Print(err)
 		return []Item{}, err
@@ -124,29 +148,4 @@ func getItemsForCategoryAndList(l List, c Category) ([]Item, error) {
 
 func printSlice(s []Item) {
 	fmt.Printf("len=%d cap=%d %v\n", len(s), cap(s), s)
-}
-
-func getItemsForCategory(c Category) ([]Item, error) {
-	rows, err := db.Query("SELECT id, name, quantity, measure, status, category_id, list_id, created_at, updated_at FROM items WHERE category_id = ?;", c.Id)
-	if err != nil {
-		log.Print(err)
-		return []Item{}, err
-	}
-	defer rows.Close()
-
-	var foundItems = []Item{}
-	for rows.Next() {
-		var i Item
-
-		err = rows.Scan(&i.Id, &i.Name, &i.Quantity, &i.Measure, &i.Status, &i.CategoryId, &i.ListId, &i.CreatedAt, &i.UpdatedAt)
-		if err != nil {
-			log.Print(err)
-			return []Item{}, err
-		}
-
-		foundItems = append(foundItems, i)
-	}
-	log.Printf("foundItems:")
-	printSlice(foundItems)
-	return foundItems, err
 }
