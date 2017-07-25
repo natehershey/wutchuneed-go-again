@@ -1,0 +1,28 @@
+.list-detail-view {
+  margin: 10px auto;
+  width: 90%;
+  padding: 10px;
+  border: 1px solid;
+  text-align: left;
+}
+
+.new-category {
+  padding: 3px;
+}
+.new-category input {
+  font-size: 2rem;
+  margin: auto;
+  float: left;
+}
+
+.new-category-save-image {
+  margin: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  height: 3rem;
+}
+
+.new-category-cancel-image {
+  margin: auto;
+  height: 3rem;
+}

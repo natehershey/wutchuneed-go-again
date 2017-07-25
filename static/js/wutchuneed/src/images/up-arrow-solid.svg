@@ -1,0 +1,16 @@
+<!--?xml version="1.0" standalone="no"?-->
+
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
+<g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#060606" stroke="none">
+<path d="M910 2405 l-585 -585 206 0 c213 0 234 -4 228 -42 -1 -7 -1 -113 0
+-235 l1 -223 740 0 740 0 2 248 3 247 215 3 215 2 -585 585 c-322 322 -587
+585 -590 585 -3 0 -268 -263 -590 -585z" id="node1" class="node"></path>
+<path d="M760 970 l0 -210 133 0 c255 -1 735 -1 1040 0 l307 0 0 210 0 210
+-740 0 -740 0 0 -210z" id="node2" class="node"></path>
+<path d="M760 470 l0 -150 741 2 741 3 0 145 -1 145 -740 3 -741 2 0 -150z" id="node3" class="node"></path>
+<path d="M758 90 l3 -90 740 0 739 0 0 90 0 90 -742 0 -743 0 3 -90z" id="node4" class="node"></path>
+</g>
+<g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#8C8C8C" stroke="none">
+
+</g>
+</svg>

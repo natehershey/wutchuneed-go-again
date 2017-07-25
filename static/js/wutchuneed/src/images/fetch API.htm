@@ -1,0 +1,625 @@
+<!DOCTYPE html><html lang=en dir=ltr><head><meta charset=utf-8><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta http-equiv="content-type" content="text/html;"><meta name=viewport content="initial-scale=1.0 maximum-scale=1.0"><title>fetch API</title><!-- stylesheets --><style type=text/css id=main-styles>*,.offscreen{padding:0;border:0}.new-main-nav,.new-main-popular strong{text-transform:uppercase}.clear:after,.clear:before,.main-nav-right>li:after,.main-nav-right>li:before,.post-list li:after,.post-list li:before{content:' ';display:table}.clear:after,.main-nav-right>li:after,.post-list li:after{clear:both}.hidden{display:none}.offscreen{clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;position:absolute;width:1px}.center,.relative{position:relative}body{font-family:Georgia,Cambria,"Times New Roman",Times,serif;font-size:22px;line-height:1.5;letter-spacing:.01rem;font-weight:400;color:rgba(0,0,0,.8);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.a11y-menu a:focus,.header-title .logo{color:#fff;text-decoration:none;font-weight:700}.fonts-loaded body{font-family:"freight-text-pro",Georgia,Cambria,"Times New Roman",Times,serif}@media (max-width:768px){body{font-size:18px}}#main-nav,#masthead-title #masthead-title-text,.header-search input,.header-title .logo,.main-nav-left li a,.main-nav-right .heading,h1,h2,h3,h4,h5{font-family:Geneva,Verdana,sans-serif}.fonts-loaded #main-nav,.fonts-loaded #masthead-title #masthead-title-text,.fonts-loaded .header-search input,.fonts-loaded .header-title .logo,.fonts-loaded .main-nav-left li a,.fonts-loaded .main-nav-right .heading,.fonts-loaded h1,.fonts-loaded h2,.fonts-loaded h3,.fonts-loaded h4,.fonts-loaded h5{font-family:"jaf-bernino-sans","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif}#masthead-title #masthead-title-text,h1,h2,h3,h4,h5{font-weight:700}#masthead-title #masthead-title-text,h1{font-size:48px;letter-spacing:-.04em;line-height:1.1}h2{font-size:32px;letter-spacing:-.04em;line-height:1.1}@media (max-width:480px){h2{font-size:24px}}article ol>:last-child,article ul>:last-child,article>:last-child{margin-bottom:0}.loading #masthead-title,.loading main{opacity:.3;pointer-events:none;cursor:default}.sidebar h3 i{-webkit-transform:rotate(0);transform:rotate(0);-webkit-transition:-webkit-transform .5s;transition:transform .5s}.sidebar h3:hover i{-webkit-transform:rotate(360deg);transform:rotate(360deg)}*{margin:0}html{background:#fff}.center{max-width:1300px;margin:0 auto;padding:0 20px}header{background:#231f20;padding:10px 0}.a11y-menu{position:absolute;top:-500px;left:block-margin;z-index:3}.a11y-menu a:focus{display:block;position:absolute;top:540px;background:#07a;padding:block-margin;width:220px;font-size:30px;text-align:center}.header-title .logo{display:inline-block;position:relative;font-size:80px;letter-spacing:-3px;margin-top:-8px}#logo-icon,#main-nav,.main-nav-left{position:absolute}.header-title .logo img{display:inline-block;vertical-align:middle;max-height:90px}@media (max-width:900px){.header-title .logo{font-size:50px}.header-title .logo img{max-height:70px}}.header-title .logo span{vertical-align:middle}.header-title .logo:active,.header-title .logo:focus,.header-title .logo:hover{color:rgba(255,255,255,.9)}#logo-icon{font-size:24px;right:-30px;top:40%}#main-nav{background:#fff;margin-top:10px;width:50%;max-width:100%;z-index:2;display:none;box-shadow:0 0 6px 0 #000;font-size:16px}#main-nav.active{display:block}#main-nav .fa-caret-up{font-size:40px;position:absolute;left:30px;top:-26px;color:#f0f0f0}.main-nav-left{width:30%;padding:10px 0;background:#f0f0f0;top:0;bottom:0;left:0}.main-nav-left .active,.main-nav-right{background:#fff}.main-nav-left li{margin:6px 0}.main-nav-left li a{display:block;padding:4px 20px;color:rgba(0,0,0,.8);text-decoration:none;font-weight:700}.main-nav-right{float:left;margin-left:30%;padding-bottom:10px;min-height:260px}@media (max-width:768px){.main-nav-left{position:static;width:auto}.main-nav-right{display:none}}.main-nav-right .active{display:block}.main-nav-right>li{padding:12px 20px;display:none}.main-nav-right .heading{font-size:28px;font-weight:700;margin-bottom:10px}.main-nav-right a{text-decoration:none}.main-nav-right a:active,.main-nav-right a:focus,.main-nav-right a:hover{text-decoration:underline}.main-nav-right ul li a{font-size:95%}.main-nav-right .bold{font-weight:700;font-size:120%}.nav-posts.half{width:200px;float:left}.nav-posts a{display:block;padding:4px 0}.header-middle{position:absolute;top:20px;left:35%}@media (max-width:1200px){.header-middle{left:40%}}@media (max-width:900px){.header-middle{left:33%;top:6px}}@media (max-width:800px){.header-middle{left:45%;top:24px}}.header-middle .social-icons{margin-bottom:20px}@media (max-width:800px){.header-middle .social-icons li{margin-right:0}.header-middle .social-icons a{display:none}}.social-icons{font-size:13px}.social-icons li{display:inline-block;margin-right:10px}.social-icons a{padding:6px;border-radius:50%;color:#fff;width:12px;height:12px;display:inline-block;opacity:.7;transition:opacity .3s,transform .3s}.social-icons a:active,.social-icons a:focus,.social-icons a:hover{opacity:1;transform:scale(1.2)}@media (max-width:1024px){.social-icons li{margin-right:18px}.social-icons a{opacity:1}}.social-icons i{vertical-align:text-top;width:12px;text-align:center}.social-icons span{color:#000;font-weight:700;vertical-align:top;padding-left:4px;font-size:16px}.social-icons .bitcoin,.social-icons .rss{background:#f67f00}.social-icons .bitcoin i{margin-top:-1px}.social-icons .twitter{background:#7ac9ed}.social-icons .facebook{background:#3b5998}.social-icons .google-plus{background:#d74d2f}.social-icons .discuss,.social-icons .github{background:#91c661}.social-icons .reddit{background:#a181a7}.social-icons .reddit i{font-weight:700;margin-left:-1px}.social-icons .discuss i{margin-top:-2px}.social-icons .linkedin{background:#0c7bb6}.social-icons .top{background:#000;display:none}.fixed .social-icons .top{display:inherit}.social-icons a.search{background:#f8da75;color:rgba(0,0,0,.8);display:none}@media (max-width:480px){.social-icons a.search{display:inline-block}}.social-icons a.search.show{display:block}.header-search{font-size:16px}@media (max-width:800px){.social-icons a.search{display:block}.header-search{display:none}}.header-search i{color:#fff;margin-right:10px}.header-search input{width:80%;background:0 0;padding:3px 6px;color:#fff;font-size:14px;border-bottom:1px solid #666;-webkit-appearance:none}.header-sda{position:absolute;top:10px;right:20px;max-width:450px}@media (max-width:1200px){.header-sda{max-width:375px}}@media (max-width:900px){.header-middle .social-icons{margin-bottom:10px}.header-sda{top:-10px}}@media (max-width:1024px){.header-sda{max-width:275px}}@media (max-width:600px){.header-middle{left:auto;right:20px}.header-sda{position:static;max-width:none}}.header-sda a{display:block;-webkit-transform:scale(1);transform:scale(1);-webkit-transition:-webkit-transform .5s;transition:transform .5s}.header-sda a:hover{-webkit-transform:scale(1.1);transform:scale(1.1)}.header-sda img{margin-top:-4px}.header-sda.fx1{-webkit-transition:opacity 1s;transition:opacity 1s;opacity:0}.header-sda.fx1.complete{opacity:1}.header-sda.fx2{transition:-webkit-filter 1s;-webkit-filter:blur(7px)}.header-sda.fx2.complete{-webkit-filter:blur(0)}.header-sda.fx3{transition:all 1s;-webkit-transform:scale(.1);transform:scale(.1);opacity:0}.header-sda.fx3.complete{-webkit-transform:scale(1);transform:scale(1);opacity:1}.header-sda.fx4 img{transition:all 1s;-webkit-transition:all 1s;transform:rotateX(0)}.header-sda.fx4.complete img{-webkit-transform:rotateX(1080deg);transform:rotateX(1080deg)}.header-sda.fx5 img{-webkit-transform-origin:50% 50%;-webkit-animation:shake 1s infinite linear;transform-origin:50% 50%;animation:shake 1s infinite linear}.header-sda.fx5.complete img{-webkit-animation:none;animation:none}.header-sda.fx6 img{-webkit-transform-origin:50% 50%;-webkit-animation:thump 1s infinite linear;transform-origin:50% 50%;animation:thump 1s infinite linear}.header-sda.fx6.complete img{-webkit-animation:none;animation:none}#masthead-title{background:#7ac9ed;padding:20px}#masthead-title #masthead-title-text{color:#fff;text-align:center}.fixed #masthead-title #masthead-title-text{font-size:24px;text-align:left}.fixed #masthead-title{position:fixed;top:0;left:0;right:0;opacity:.9;z-index:3;padding:10px}#masthead-title .social-icons{float:right}@media (max-width:768px){#masthead-title #masthead-title-text{font-size:24px}.fixed #masthead-title #masthead-title-text{display:none}#masthead-title .social-icons{float:none;text-align:center}#masthead-title .social-icons span{display:none}}#masthead-title .social-icons .twitter{background:#fff;color:#7ac9ed}.new-main-nav{font-size:20px;font-weight:700;display:inline-block;margin-left:60px;font-family:Arial}.new-main-nav li{line-height:1;display:inline-block;padding:1px 2px;margin:0 20px 0 0}.new-main-popular strong,.new-main-popular ul li{margin-right:20px;display:inline-block}.new-main-nav li a{display:inline-block;color:#7ac9ed;text-decoration:none}@media (max-width:1024px){.new-main-nav .new-main-nav-blog,.new-main-nav .new-main-nav-topics{display:none}}@media (max-width:800px){.new-main-nav,.new-main-popular{display:none}}.new-main-popular{background:#eee;padding:8px 0;font-family:Arial;font-size:18px}.new-main-popular ul{display:inline-block}.new-main-popular ul a{color:#666;text-decoration:none;border-bottom:1px solid #fff}a,h2 a:active,h2 a:focus,h2 a:hover,h3 a:active,h3 a:focus,h3 a:hover{color:#07a}h2 a,h3 a{color:rgba(0,0,0,.8);text-decoration:none;display:block}h3{line-height:1.1}ol,ul{list-style-type:none}iframe,img{max-width:100%;display:block;-ms-interpolation-mode:bicubic}.main{margin:40px 0}@media (max-width:768px){.main{margin:20px 0}}main{max-width:65%;width:65%;float:left;margin-right:40px;overflow-x:hidden}@media (max-width:768px){main{max-width:none;width:auto;float:none;margin-right:0}}.sidebar{width:calc(35% - 40px);float:left;opacity:0;font-size:16px;margin-top:-20px}@media (max-width:768px){.sidebar{margin:20px auto 10px;float:none;width:auto;max-width:425px}}.sidebar h3{padding:8px 12px;background:#d74d2f;color:#fff;margin-bottom:8px}.sidebar h3 a{color:#fff!important}.sidebar>div{margin:0 0 40px}.big-show h2{font-size:48px}.post-list li{margin-bottom:40px;cursor:pointer;position:relative;color:rgba(0,0,0,.6)}.post-list li:hover{color:rgba(0,0,0,.8)}.post-list li:hover h2 a,.post-list li:hover h3 a{color:#07a}.post-list .meta{display:none}.post-list .post-image{width:20%;float:left;margin-top:10px;border-radius:4px;opacity:1;-webkit-transition:opacity 1s;transition:opacity 1s}.post-list .post-image[data-src]{opacity:0}.post-list .preview{float:left;width:77%;margin-left:3%}@media (max-width:768px){.big-show h2{font-size:28px}.post-list .post-image{display:none}.post-list .preview{float:none;width:auto;margin-left:0}}.fixed .sidebar,.fixed article{padding-top:90px}article .ad,article .gb-intro,article .update,article blockquote,article iframe,article ol,article p,article pre,article pre[class*=language-],article table,article ul{margin:0 0 30px}article img,article video{margin:0 auto}article img.image{float:right;margin:0 0 20px 20px;max-width:250px}@media (max-width:768px){article img.image{float:none;margin:0 auto}}article ol,article ul{padding-left:40px}article ul{list-style-type:disc}article ol{list-style-type:decimal}article pre[class*=language-]{border-bottom:1px solid #eee;border-top:1px solid #eee;padding:20px 0!important}.actions{margin-bottom:20px}.meta{margin:0 0 10px;font-style:italic;font-size:18px}.meta,.meta a{color:#8e8e8e}.meta .social-icons{display:inline-block;margin:0}@media (max-width:768px){.meta{text-align:center}.meta .social-icons{margin-top:10px}}@media (max-width:480px){.meta .social-icons{display:block;padding-left:0}}.meta .social-icons a{color:#fff}
+/*# sourceMappingURL=maps/above-fold.css.map */.clear:after,.x-long{clear:both}.demo-intro,.gb-intro,.update{font-style:italic}.pagination,.sidebar-event{text-align:center}.clear:after,.clear:before{content:' ';display:table}.hidden{display:none}.offscreen{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}#comment-form input[type=submit],#launch-editor,.actions a,.comment-user,.demo-toolbar .intro,.green-button,.home-features h2,.pagination a,.post-list-topics h2,.sidebar-lists,.sidebar-topics{font-family:Geneva,Verdana,sans-serif}.fonts-loaded #comment-form input[type=submit],.fonts-loaded #launch-editor,.fonts-loaded .actions a,.fonts-loaded .comment-user,.fonts-loaded .demo-toolbar .intro,.fonts-loaded .green-button,.fonts-loaded .home-features h2,.fonts-loaded .pagination a,.fonts-loaded .post-list-topics h2,.fonts-loaded .sidebar-lists,.fonts-loaded .sidebar-topics{font-family:"jaf-bernino-sans","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif}.home-features h2,.post-list-topics h2{font-weight:700;font-size:48px;letter-spacing:-.04em;line-height:1.1}.home-features h3{font-size:32px;letter-spacing:-.04em;line-height:1.1}@media (max-width:480px){.home-features h3{font-size:24px}}.post-list-topics h2 a,.post-more h2 a,.sidebar-link-header h3 a{display:block;position:relative}.post-list-topics h2 a:active,.post-list-topics h2 a:focus,.post-list-topics h2 a:hover,.post-more h2 a:active,.post-more h2 a:focus,.post-more h2 a:hover,.sidebar-link-header h3 a:active,.sidebar-link-header h3 a:focus,.sidebar-link-header h3 a:hover{color:#fff}.post-list-topics h2 i,.post-more h2 i,.sidebar-link-header h3 i{position:absolute;right:0;top:3px}#comment-form input[type=submit],.actions a,.button,.green-button,.pagination a,button,input[type=submit]{background:#f9f9f9;display:inline-block;padding:6px 14px;border:1px solid #eee;margin:0 10px 10px 0;text-decoration:none;cursor:pointer;color:#07a}#comment-form input[type=submit] i,.actions a i,.button i,.green-button i,.pagination a i,button i,input[type=submit] i{margin:0 0 0 10px}#comment-form input[type=submit]:hover,.actions a:hover,.button:hover,.green-button:hover,.pagination a:hover,button:hover,input[type=submit]:hover{border-color:#ddd}#launch-editor{text-decoration:none}#launch-editor:active,#launch-editor:focus,#launch-editor:hover{text-decoration:underline}.comment-user a,.demo-toolbar .intro a,.gb-links a,.sidebar-event a,.sidebar-lists li a,.sidebar-topics li a,a.wufoo{text-decoration:none}#gb-bio,.gb-intro,.update{padding:14px 12px}#gb-bio>:last-child,.comment-content>:last-child,.comment-content>:not(pre)>:last-child,.comments>:last-child,.gb-intro>:last-child,.update>:last-child,aside>:last-child,blockquote>:last-child{margin-bottom:0}#comment-form input[type=submit] i,.actions a i,.green-button i,.pagination a i,.post-list-topics h2 i,.post-more h2 i{-webkit-transform:rotate(0);transform:rotate(0);-webkit-transition:-webkit-transform .5s;transition:transform .5s}#comment-form input[type=submit]:hover i,.actions a:hover i,.green-button:hover i,.pagination a:hover i,.post-list-topics h2:hover i,.post-more h2:hover i{-webkit-transform:rotate(360deg);transform:rotate(360deg)}.comments pre[class*=language-] code,pre,pre[class*=language-]{font-size:16px}@media (max-width:768px){.comments pre[class*=language-] code,pre,pre[class*=language-]{font-size:14px}}.small-list{font-size:18px}.small-list img.post-image{width:15%}::selection{background:rgba(231,105,105,.7)}::-moz-selection{background:rgba(231,105,105,.7)}@-webkit-keyframes shake{0%{-webkit-transform:translate(2px,1px) rotate(0)}10%{-webkit-transform:translate(-1px,-2px) rotate(-1deg)}20%{-webkit-transform:translate(-3px,0) rotate(1deg)}30%{-webkit-transform:translate(0,2px) rotate(0)}40%{-webkit-transform:translate(1px,-1px) rotate(1deg)}50%{-webkit-transform:translate(-1px,1px) rotate(-1deg)}60%{-webkit-transform:translate(-3px,-2px) rotate(0)}70%{-webkit-transform:translate(2px,1px) rotate(-1deg)}80%{-webkit-transform:translate(-1px,-2px) rotate(1deg)}90%{-webkit-transform:translate(2px,-1px) rotate(0)}100%{-webkit-transform:translate(1px,-2px) rotate(-1deg)}}@-webkit-keyframes thump{0%,100%{-webkit-transform:scale(1)}50%{-webkit-transform:scale(.9)}}.device-state{z-index:1}@media (max-width:1024px){.device-state{z-index:2}}@media (max-width:768px){.device-state{z-index:3}}@media (max-width:480px){.device-state{z-index:4}}kbd{background-color:#f4f7f8;border-radius:3px;border:1px solid #b4b4b4;box-shadow:0 1px 1px rgba(0,0,0,.2),0 2px 0 0 rgba(255,255,255,.7) inset;display:inline-block;padding:2px 4px;white-space:nowrap;line-height:1;font-size:80%}#sidebar-oreilly iframe{width:100%;max-width:100%}.sidebar-link-header h3{margin-bottom:0;position:relative}.sidebar-lists h3{background:#69c773}.sidebar-lists li{border-bottom:1px solid #eee;position:relative}.sidebar-lists li a{display:block;padding:10px 20px}.sidebar-lists li a:active,.sidebar-lists li a:focus,.sidebar-lists li a:hover{background:rgba(105,199,115,.1)}.sidebar-sda img{max-width:48%;width:calc(50% - 10px);height:auto;margin-right:10px;display:inline}.sidebar-sda img:nth-child(even){margin-right:0}.sidebar-sda a,.sidebar-sda iframe{display:inline!important;width:auto!important;max-width:180px}.sidebar-sda a.adhere,.sidebar-sda iframe.adhere{display:none!important}.sidebar-sda-large{max-width:300px;margin:0 auto 40px!important}.sidebar-sda-large a{margin-bottom:10px!important}.sidebar-sda-small{max-width:468px;margin:0 auto}.sidebar-sda-small a{margin-bottom:10px!important;width:auto!important;max-width:100%}.sidebar-topics{font-size:14px}.sidebar-topics ul{margin-top:10px}.sidebar-topics li{display:inline-block;margin:0 6px 6px 0}.sidebar-topics li a{display:block;padding:2px 6px;color:rgba(0,0,0,.8);background:#fff5bb}.sidebar-facebook iframe{overflow:hidden;height:62px;width:190px;display:block;margin:0 auto;border:0}#ace-box,div[data-fiddle] iframe{width:100%}footer{background:#333;padding:20px 0;color:#fff;font-size:18px}footer a{color:rgba(255,255,255,.8)}footer .social{float:right}@media (max-width:768px){footer{text-align:center}footer .social{float:none;margin-top:0;margin-bottom:20px}}footer span{margin-right:8px;display:inline-block}.home-terciary{margin-bottom:40px}.clickable{cursor:pointer}body.demo{overflow:hidden;height:10px}body.demo .demo-box{display:block}.demo-box{position:fixed;top:0;left:0;bottom:0;right:0;z-index:2001;display:none}.demo-toolbar{background:#333;height:60px;border-bottom:3px solid #ccc}.demo-toolbar .intro{font-size:30px;display:block;top:9px;position:absolute;color:#fff;left:20px;font-weight:700}@media (max-width:480px){.demo-toolbar .intro{display:none}}.demo-toolbar .intro a{color:#d74d2f}.demo-toolbar a.close{top:10px;right:20px;position:absolute}.demo-iframe-holder{position:fixed;right:0;bottom:0;left:0;top:63px;background:rgba(255,255,255,.8);-webkit-overflow-scrolling:touch;overflow-y:scroll}a.wufoo,a.wufoo svg{overflow:hidden}.demo-iframe-holder iframe{height:100%;width:100%}.demo-conversion{padding:5px 10px;background:rgba(105,199,115,.3);font-weight:700;margin-bottom:10px}.demo-page #masthead-title,.demo-page .logo .fa-caret-down{display:none}.demo-page main{float:none;max-width:none;margin-right:300px}@media (max-width:1024px){.demo-page main{margin-right:0}}.demo-page #promoNode span{display:inline-block;margin-right:20px}.demo-intro{padding:5px 10px;background:rgba(246,127,0,.3);margin:10px 0 20px}.comments{margin:0 0 40px;font-size:18px}.comments a{word-wrap:break-word}.comments li{position:relative}.comments li:hover .box .comment-controls a{color:#07a;opacity:.8}.comment-controls a,.comment-user,.comment-user a{color:rgba(0,0,0,.8)}.comments img{position:absolute;left:0;top:10px;max-width:48px;border-radius:50%}.x-long,a.wufoo svg{max-height:90px;max-width:728px}.comments .box{margin-bottom:10px;min-height:32px;padding:10px;background:#f9f9f9}.comments .children{margin-left:20px}@media (max-width:768px){.demo-page .bsap{display:none}.comments li{z-index:2}.comments img{display:none}.comments .children{margin-left:0}}.comments .children li{margin:0 0 10px 20px}.comments .children li .box{background:rgba(249,249,249,.8);padding-left:40px}.comments .children li:last-child{margin-bottom:0}.comments .dw .box{background:rgba(0,147,204,.1)!important;border-color:rgba(0,119,170,.2)}.comments .dw img{border-radius:0}.comments.avatars>li{padding-left:10px}@media (max-width:768px){.comments .children li .box{padding-left:10px}.comments.avatars>li{padding-left:0}}.comments.avatars .box{padding-left:50px}@media (max-width:768px){.comments.avatars .box{padding-left:10px}}.comments.avatars .children li img{left:-20px}.comments pre[class*=language-]{border:1px solid #eee;background:#fff!important}.comment-user{font-weight:700;margin-bottom:6px;position:relative}.comment-controls{position:absolute;right:10px;top:6px}#ace-box,#gb-bio,.x-long{position:relative}.comment-controls a{opacity:.2;margin:0 0 0 6px}@media (max-width:1024px){.comment-controls{font-size:120%}.comment-controls a{margin-left:12px;color:#07a;opacity:1}}#comment-use-editor{font-size:14px}#ace-box{height:200px;margin-bottom:20px}.comment-content>:not(pre){margin-bottom:10px}.comment-content pre,.comment-content pre[class*=language-]{background:#fdfdfd;padding:10px!important}.comment-content iframe,div[data-fiddle],div[data-gist]{margin:20px 0}.gist .blob-code-inner,body div[data-gist] .gist .line-pre,body div[data-gist] .line-numbers,body div[data-gist] pre{font-size:15px!important}.subscribe-to-comments{margin:10px 0}button,input[type=submit]{font-size:inherit;-webkit-appearance:none}select{font-size:inherit}#comment-form{margin-bottom:20px}#comment-form label{font-weight:700;margin-right:1%;width:31%;display:inline-block}#comment-form label:nth-child(3){margin-right:0;width:33%}#comment-form label[for=subscribe]{width:auto;margin:10px 0 20px}#comment-form .label{display:none}.x-long,a.wufoo,pre{display:block}#comment-form input[type=email],#comment-form input[type=search],#comment-form input[type=text],#comment-form input[type=url],#comment-form textarea{padding:6px;border:1px solid #ccc;box-sizing:border-box;width:100%;background:#f9f9f9;font-size:18px}#comment-form input[type=email]:focus,#comment-form input[type=search]:focus,#comment-form input[type=text]:focus,#comment-form input[type=url]:focus,#comment-form textarea:focus{background:#fff}#comment-form textarea{width:100%;min-height:200px}.hint,.subscribe-to-comments{margin:20px 0 4px;font-style:italic;font-size:16px}#launch-editor{font-size:15px;color:#999}#launch-editor i{margin-right:4px}main .x-long{margin-left:auto;margin-right:auto;margin-bottom:30px}main .post-list .x-long{margin-bottom:0}.ad-center{margin:0 auto}a.wufoo .letter{-webkit-transform:scale(.45);-ms-transform:scale(.45);transform:scale(.45)}a.wufoo .byline,a.wufoo .illustration,a.wufoo .letter,a.wufoo .swirl,a.wufoo .text{opacity:.6}a.wufoo .illustration{-webkit-transform:scale(1.2);-ms-transform:scale(1.2);transform:scale(1.2)}a.wufoo .byline,a.wufoo .illustration,a.wufoo .letter,a.wufoo .text{-webkit-transition:all .6s;-ms-transition:all .6s;transition:all .6s}.new a.wufoo .byline,.new a.wufoo .illustration,.new a.wufoo .letter,.new a.wufoo .text{-webkit-transition:none;-ms-transition:none;transition:none}a.wufoo.complete .letter{opacity:1;-webkit-transform:scale(.5);-ms-transform:scale(.5);transform:scale(.5)}a.wufoo.complete .letter:nth-of-type(2){-webkit-transition-delay:.2s;-ms-transition-delay:.2s;transition-delay:.2s}a.wufoo.complete .letter:nth-of-type(3){-webkit-transition-delay:.3s;-ms-transition-delay:.3s;transition-delay:.3s}a.wufoo.complete .letter:nth-of-type(4){-webkit-transition-delay:.4s;-ms-transition-delay:.4s;transition-delay:.4s}a.wufoo.complete .letter:nth-of-type(5){-webkit-transition-delay:.5s;-ms-transition-delay:.5s;transition-delay:.5s}a.wufoo.complete .byline,a.wufoo.complete .illustration,a.wufoo.complete .text{opacity:1;-webkit-transform:scale(1);-ms-transform:scale(1);transform:scale(1);-webkit-transition-delay:.5s;-ms-transition-delay:.5s;transition-delay:.5s}article a.wufoo{margin:20px 0}input[type=text],input[type=password],textarea{border:1px solid #ccc;padding:3px;font-size:inherit}.fa-facebook-square{color:#3b5998}.fa-google-plus-square{color:#d74d2f}.fa-twitter-square{color:#7ac9ed}.pagination{margin-bottom:40px}.pagination .fa-arrow-circle-o-left{margin-left:0;margin-right:10px}.actions{margin-bottom:20px}#comment-form input[type=submit],.actions a,.green-button,.pagination a{background:#69c773;border:0;border-bottom:3px solid rgba(73,134,18,.3);color:#fff;font-weight:400;font-size:20px;transition:border-color 1s;text-decoration:none;white-space:nowrap}#comment-form input[type=submit]:active,#comment-form input[type=submit]:focus,#comment-form input[type=submit]:hover,.actions a:active,.actions a:focus,.actions a:hover,.green-button:active,.green-button:focus,.green-button:hover,.pagination a:active,.pagination a:focus,.pagination a:hover{border-color:rgba(73,134,18,.7)}@media (max-width:768px){#comment-form input[type=submit],.actions a,.green-button,.pagination a{font-size:16px}}pre,pre[class*=language-]{background:#fff!important;padding:0!important;-webkit-tab-size:2;-moz-tab-size:2;tab-size:2}code{padding:2px 6px;background:#f0f0f0;border-radius:3px}article li code,article p code{white-space:nowrap;font-size:80%;color:#000}pre{padding:0;background:inherit}aside,blockquote{border:1px solid #eee;background:#f9f9f9;padding:10px}.article-block{margin:40px 0}.article-block h2,.home-features h2{margin-bottom:10px}.article-block h2{background:#eee;padding:10px 16px;font-size:24px}.post-list-topics h2,.post-more h2{background:#eee}.post-list-topics img.post-image,.post-more img.post-image{width:15%;margin-top:0}.post-more h2 a{color:#444!important}.post-list-topics{margin-top:20px}.update{background:#f3f3f3}#gb-bio,.gb-intro{border:1px solid rgba(122,201,237,.1);background:rgba(122,201,237,.1);font-size:18px}#gb-bio{padding-left:184px;min-height:170px}#gb-bio a,#gb-bio h2{margin-top:8px;color:#d74d2f}#gb-bio img{border:5px solid #f3f3f3;box-shadow:1px 1px 2px #666;width:150px;height:150px;position:absolute;left:10px;top:10px;border-radius:50%}@media (max-width:768px){#gb-bio{padding-left:12px;min-height:0}#gb-bio img{display:none}}.gb-links{text-transform:lowercase;margin-top:-20px}.gb-links a{display:inline-block;margin-right:20px;background:rgba(255,255,255,.8);padding:2px 6px;border:1px solid rgba(122,201,237,.4)}.gb-links i{margin-right:6px;font-size:18px;margin-top:2px}.deal-callout code{background:rgba(246,127,0,.5);color:rgba(0,0,0,.8);border-radius:3px;padding:0 7px}.sidebar-event a{color:#008b93}.sidebar-event img{margin:0 auto}.sidebar-event strong{display:block;font-size:16px;color:rgba(0,0,0,.8)}.cp_embed_iframe{border:1px solid #3d3d3e}.twitter-tweet{margin:0 auto 40px!important}body #postmatic-widget-bottom_calderaModal{margin-right:20px!important}body #prompt-comment-subscribe{display:block;width:auto;margin-bottom:20px}@media print{.center,main{padding:0}.ad,.sidebar,footer,header{display:none}main{width:auto;float:none}}@keyframes shake{0%{transform:translate(2px,1px) rotate(0)}10%{transform:translate(-1px,-2px) rotate(-1deg)}20%{transform:translate(-3px,0) rotate(1deg)}30%{transform:translate(0,2px) rotate(0)}40%{transform:translate(1px,-1px) rotate(1deg)}50%{transform:translate(-1px,2px) rotate(-1deg)}60%{transform:translate(-3px,1px) rotate(0)}70%{transform:translate(2px,1px) rotate(-1deg)}80%{transform:translate(-1px,-1px) rotate(1deg)}90%{transform:translate(2px,2px) rotate(0)}100%{transform:translate(1px,-2px) rotate(-1deg)}}@keyframes thump{0%,100%{transform:scale(1)}50%{transform:scale(.9)}}
+/*# sourceMappingURL=maps/style.css.map */
+code[class*=language-],pre[class*=language-]{color:#000;background:0 0;text-shadow:0 1px #fff;font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}code[class*=language-] ::-moz-selection,code[class*=language-]::-moz-selection,pre[class*=language-] ::-moz-selection,pre[class*=language-]::-moz-selection{text-shadow:none;background:#b3d4fc}code[class*=language-] ::selection,code[class*=language-]::selection,pre[class*=language-] ::selection,pre[class*=language-]::selection{text-shadow:none;background:#b3d4fc}@media print{code[class*=language-],pre[class*=language-]{text-shadow:none}}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto}:not(pre)>code[class*=language-],pre[class*=language-]{background:#f5f2f0}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#708090}.token.punctuation{color:#999}.namespace{opacity:.7}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#905}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#690}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url{color:#a67f59;background:hsla(0,0%,100%,.5)}.token.atrule,.token.attr-value,.token.keyword{color:#07a}.token.function{color:#DD4A68}.token.important,.token.regex,.token.variable{color:#e90}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}</style>
+<!-- touch and favorite icons --><link rel=apple-touch-icon-precomposed sizes=144x144 href="/wp-content/themes/punky/images/favicon-144.png"><link rel=apple-touch-icon-precomposed sizes=114x114 href="/wp-content/themes/punky/images/favicon-114.png"><link rel=apple-touch-icon-precomposed sizes=72x72 href="/wp-content/themes/punky/images/favicon-72.png"><link rel=apple-touch-icon-precomposed href="/wp-content/themes/punky/images/favicon-57.png"><link rel="shortcut icon" href="/wp-content/themes/punky/images/favicon-32.png"><!-- links --><link rel=start href="https://davidwalsh.name/" title="David Walsh Blog"><link rel=alternate type="application/atom+xml" title="David Walsh Blog Atom Feed" href="https://davidwalsh.name/feed/atom"><link rel=alternate type="application/rss+xml" title="David Walsh Blog RSS 2.0 Feed" href="https://davidwalsh.name/feed"><link rel=alternate type="application/rss+xml" title="David Walsh Blog Comments RSS 2.0 Feed" href="https://davidwalsh.name/comments/feed"><link rel=alternate type="application/rdf+xml" title="David Walsh Blog RSS 1.0" href="https://davidwalsh.name/feed/rdf"><link rel=alternate type=text/xml title="David Walsh Blog RSS 0.92 Feed" href="https://davidwalsh.name/feed/rss"><link rel=pingback href="https://davidwalsh.name/xmlrpc.php"><link rel=search type="application/opensearchdescription+xml" href=/opensearch.xml title="David Walsh Blog Search"><!-- Google Plus Publisher --><meta name=author content="David Walsh"><!-- BEGIN TRACKJS --><script type=text/javascript>window._trackJs = { token: '85a3267cff7d4bc5b38573484d819a11' };</script><script type=text/javascript src=https://d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js></script><!-- END TRACKJS --><!--[if IE]><script src=//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.js></script><![endif]-->
+<!-- This site is optimized with the Yoast SEO plugin v4.9 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="The new fetch API uses promises and a new syntax for making AJAX requests. fetch is much cleaner than XMLHttpRequest."/>
+<link rel="canonical" href="https://davidwalsh.name/fetch" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="fetch API" />
+<meta property="og:description" content="The new fetch API uses promises and a new syntax for making AJAX requests. fetch is much cleaner than XMLHttpRequest." />
+<meta property="og:url" content="https://davidwalsh.name/fetch" />
+<meta property="og:site_name" content="David Walsh Blog" />
+<meta property="article:publisher" content="https://www.facebook.com/davidwalshblog" />
+<meta property="article:section" content="AJAX" />
+<meta property="article:published_time" content="2015-04-15T18:56:14+00:00" />
+<meta property="article:modified_time" content="2016-07-05T10:01:38+00:00" />
+<meta property="og:updated_time" content="2016-07-05T10:01:38+00:00" />
+<meta property="og:image" content="https://davidwalsh.name/wp-content/themes/punky/images/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:description" content="The new fetch API uses promises and a new syntax for making AJAX requests. fetch is much cleaner than XMLHttpRequest." />
+<meta name="twitter:title" content="fetch API" />
+<meta name="twitter:site" content="@davidwalshblog" />
+<meta name="twitter:image" content="https://davidwalsh.name/wp-content/themes/punky/images/logo.png" />
+<meta name="twitter:creator" content="@davidwalshblog" />
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="David Walsh Blog &raquo; fetch API Comments Feed" href="https://davidwalsh.name/fetch/feed" />
+<link rel='https://api.w.org/' href='https://davidwalsh.name/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://davidwalsh.name/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://davidwalsh.name/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.8" />
+<link rel='shortlink' href='https://davidwalsh.name/?p=25359' />
+<link rel="alternate" type="application/json+oembed" href="https://davidwalsh.name/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fdavidwalsh.name%2Ffetch" />
+<link rel="alternate" type="text/xml+oembed" href="https://davidwalsh.name/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fdavidwalsh.name%2Ffetch&#038;format=xml" />
+<meta name=robots content="index,follow"><link rel="amphtml" href="https://davidwalsh.name/fetch/amp" /></head><body class="single"><script>z={analyticsID:"UA-2087880-2",themePath:"/wp-content/themes/punky",pluginPath:"libs/curl/src/curl/plugin/",domain:"davidwalsh.name",loadSidebar:!(-1!=navigator.userAgent.toLowerCase().indexOf("googlebot")),d:document,w:this},z.baseUrl=z.themePath+"/js/",location.hostname.indexOf(z.domain)<0&&(z.isDebug=1,z.analyticsID=0),z.moo=z.baseUrl+"MooTools-Core-1.6.0.js";z.analyticsID&&function(){!function(e,a,t,n,c,s,i){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,s=a.createElement(t),i=a.getElementsByTagName(t)[0],s.async=1,s.src=n,i.parentNode.insertBefore(s,i)}(z.w,z.d,"script","//www.google-analytics.com/analytics.js","ga"),ga("create",z.analyticsID,{siteSpeedSampleRate:50}),ga("set","forceSSL",!0),ga("send","pageview"),ga("set","nonInteraction",!0)}();</script>
+<!-- accessibility header --><ul class=a11y-menu><li><a href=/>Home</a></li><li><a href=#main>Main Content</a></li></ul><!-- site header and nav menu --><header id=top><div class="center clear"><div class=header-title><a href=/ class=logo><img data-src="/wp-content/themes/punky/images/logo.png" alt="" /><span>DWB</span><i class="fa fa-bars" data-open-icon=fa-times aria-hidden=true id=logo-icon></i></a><nav id=main-nav><div class="relative clear"><i class="fa fa-caret-up" aria-hidden=true></i><ul class=main-nav-left><li><a href=/>Home</a></li><li><a href=/page/1 data-content=tutorials>Tutorials</a></li><li><a href=/tutorials/features data-content=features>Features</a></li><li><a href=/tutorials/demos data-content=demos>Demos</a></li><li><a href=/topics data-content=popular>Topics</a></li><li><a href=/about data-content=about>The Blog</a></li></ul><ul class=main-nav-right><li id=nav-tutorials><div class=heading>Recent Tutorials</div><ul class=nav-posts><li><a href="https://davidwalsh.name/waveform" class=bold>Create a Waveform Image with&nbsp;ffmpeg</a></li><li><a href="https://davidwalsh.name/wake-lock-shim">Prevent Mobile Browser From&nbsp;Sleeping</a></li><li><a href="https://davidwalsh.name/jupyter-conference">O'Reilly Jupyter Conference for Machine Learning is&nbsp;Coming!</a></li><li><a href="https://davidwalsh.name/streaming-data-fetch-ndjson">Streaming Data with Fetch() and&nbsp;NDJSON</a></li><li><a href="https://davidwalsh.name/website-speed-test">Website Speed Test by&nbsp;Cloudinary</a></li></ul></li><li id=nav-features><div class=heading>Recent Features</div><ul class=nav-posts><li><a href="https://davidwalsh.name/being-a-dev-dad" class=bold>Being a Dev&nbsp;Dad</a></li><li><a href="https://davidwalsh.name/promises">JavaScript Promise&nbsp;API</a></li><li><a href="https://davidwalsh.name/chris-coyiers-favorite-demos-ii">Chris Coyier's Favorite CodePen Demos&nbsp;II</a></li><li><a href="https://davidwalsh.name/essential-javascript-functions">7 Essential JavaScript&nbsp;Functions</a></li><li><a href="https://davidwalsh.name/impostor-syndrome">I'm an&nbsp;Impostor</a></li></ul></li><li id=nav-demos><div class=heading>Interactive Demos</div><ul class=nav-posts><li><a href="https://davidwalsh.name/codepen-animations" class=bold>Chris Coyier: Some Amazing Work on CodePen&nbsp;III</a></li><li><a href="https://davidwalsh.name/video-preview">Create Short Preview from&nbsp;Video</a></li><li><a href="https://davidwalsh.name/css-reverse">Reverse Element Order with CSS&nbsp;Flexbox</a></li><li><a href="https://davidwalsh.name/clipboard">JavaScript Copy to&nbsp;Clipboard</a></li><li><a href="https://davidwalsh.name/speech-recognition">JavaScript Speech&nbsp;Recognition</a></li></ul></li><li id=nav-popular><div class=heading>Popular Topics</div><ul class="nav-posts half"><li><a href=/tutorials/html5 class=bold>HTML5</a></li><li><a href=/tutorials/css/animations>CSS Animations</a></li><li><a href=/tutorials/firefoxos>Firefox OS</a></li><li><a href=/tutorials/jquery>jQuery</a></li><li><a href=/tutorials/mootools>MooTools</a></li><li><a href=/tutorials/php>PHP</a></li></ul><ul class="nav-posts half"><li><a href=/tutorials/css class=bold>CSS3</a></li><li><a href=/tutorials/wordpress>WordPress</a></li><li><a href=/tutorials/mobile>Mobile</a></li><li><a href=/tutorials/seo>SEO</a></li><li><a href=/tutorials/javascript>JavaScript</a></li><li><a href=/tutorials/dojo>Dojo Toolkit</a></li></ul></li><li id=nav-about><div class=heading>David Walsh Blog</div><ul class=nav-posts><li><a href=/about-david-walsh class=bold>About David Walsh</a></li><li><a href=/contact>Contact and Advertise</a></li><li><a href=/deals>Developer Deals</a></li><li><a href=/mozilla>Mozilla</a></li></ul></li></ul></div></nav></div><div class=header-middle><ul class=social-icons><li><a href=/feed data-noxhr=true class=rss><i class="fa fa-rss" aria-hidden=true></i></a></li><li><a href=//twitter.com/davidwalshblog rel=nofollow class=twitter><i class="fa fa-twitter" aria-hidden=true></i></a></li><li><a href=//facebook.com/davidwalshblog rel=nofollow class=facebook><i class="fa fa-facebook" aria-hidden=true></i></a></li><li><a href="https://plus.google.com/114538814489633467974?rel=author" rel=nofollow class=google-plus><i class="fa fa-google-plus" aria-hidden=true></i></a></li><li><a href=//github.com/darkwing rel=nofollow class=github><i class="fa fa-github" aria-hidden=true></i></a></li><li><a href=//linkedin.com/in/davidjameswalsh rel=nofollow class=linkedin><i class="fa fa-linkedin" aria-hidden=true></i></a></li><li><a href="/?s=search" class=search><i class="fa fa-search" aria-hidden=true></i></a></li></ul><div class=header-search><form action=/><label for=header-search-field><span class=offscreen>Search</span><i class="fa fa-search" aria-hidden=true></i><input type=search name=s id=header-search-field></label></form></div></div><div class=header-sda style='font-family:"jaf-bernino-sans","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif; top:20px;text-align:right;'><a href=http://www.oreilly.com/pub/cpc/88823 style=display:block;text-decoration:none; rel=nofollow><!--<img data-src="/wp-content/themes/punky/images/sda/safari-logo-no-bar.png" alt="" style="max-width: 160px;margin: -10px auto 10px auto;" />--><span class=header-sda-byline style="display:block;text-transform:uppercase;color:#91c661;font-size:80%;font-weight:bold;line-height:1;">O'Reilly Events:</span><span class=header-sda-headline style="display:block;color: #fff;font-weight: bold; font-size:80%;">The state of Jupyter</span><span class=header-sda-secondary style="display:block;font-size: 80%;color:yellow;line-height:1;">How Project Jupyter got here<br>and where we are headed.</span></a></div></div></header><div class=new-main-popular><div class=center><strong>Popular:</strong><ul><li><a href=/promises>JavaScript Promises</a></li><li><a href=/fetch>fetch API</a></li><li><a href=/tutorials/react>React.js</a></li><li><a href=/cache>Cache API</a></li><li><a href=/es6-features>ES6 Features</a></li><li><a href=/tutorials/nodejs>Node.js</a></li><li><a href=/tutorials/javascript>JavaScript</a></li><li><a href=/tutorials/jquery>jQuery</a></li></ul></div></div><div id=masthead-title aria-hidden=true><div class=center><!--MASTHEAD--><div id=masthead-title-text>fetch&nbsp;API</div><!--/MASTHEAD--></div></div>
+<!-- content wrapper --><div class=main><div class="center clear"><!-- main content column --><main id=main><!--CONTENT--><div class=oreilly-callout style=background:#7372a5;><a href=http://www.oreilly.com/pub/cpc/77171 style="color: #fff;"><i class="fa fa-arrow-circle-o-right"></i>
+&nbsp;<strong style=color:yellow>Building Resilient Systems on AWS</strong>: Learn how to design and implement a resilient, highly available, fault-tolerant infrastructure on AWS.</a></div><style>
+.oreilly-callout {
+background: #231f20;
+margin-bottom: 30px;
+padding: 5px 10px;
+border-radius: 6px;
+display: none;
+}
+.oreilly-callout a {
+color: #7ac9ed;
+text-decoration: none;
+display: block;
+}
+.oreilly-callout a code {
+color: #fff;
+background-color: #000;
+margin-left: 10px;
+}
+</style><article itemscope itemtype=http://schema.org/Article><h1 itemprop=headline class=offscreen>fetch API</h1><div class=meta id=meta>
+By
+<a href="http://davidwalsh.name" itemprop=author itemscope itemtype=https://schema.org/Person><span itemprop=name>David Walsh</span></a>&nbsp;on
+<time itemprop=datePublished>April 15, 2015</time>
+&nbsp;
+<ul class=social-icons id=single-social data-url="https://davidwalsh.name/fetch" data-title="fetch API"  data-twitter-handle=""><li><a href=#comments class=discuss title="Join the discussion"><i class="fa fa-comment" aria-hidden=true></i></a><span>57</span></li><li><a href=javascript:; rel=nofollow class="twitter get-count soc" title="Share on Twitter!"><i class="fa fa-twitter" aria-hidden=true></i></a></li><li><a href=javascript:; rel=nofollow class="facebook get-count soc" title="Share on Facebook!"><i class="fa fa-facebook" aria-hidden=true></i></a></li><li><a href=javascript:; rel=nofollow class="google-plus soc" title="Share on Google Plus!"><i class="fa fa-google-plus" aria-hidden=true></i></a></li><li><a href="//www.reddit.com/submit?url=https://davidwalsh.name/fetch" target=_blank class=reddit title="Share on Reddit"><i class="fa fa-reddit" aria-hidden=true></i></a></li><li><a href=#top class=top title="Go to top"><i class="fa fa-chevron-circle-up" aria-hidden=true></i></a></li></ul></div><div class=offscreen></div><!-- content --><p>One of the worst kept secrets about AJAX on the web is that the underlying API for it, <code>XMLHttpRequest</code>, wasn't really made for what we've been using it for.  We've done well to create elegant APIs around XHR but we know we can do better.  Our effort to do better is the <code>fetch</code> API.  Let's have a basic look at the new <code>window.fetch</code> method, available now in Firefox and Chrome Canary.</p>
+
+<h2>XMLHttpRequest</h2>
+
+<p><a href="https://davidwalsh.name/xmlhttprequest">XHR</a> is a bit overcomplicated in my opinion, and don't get me started on why "XML" is uppercase but "Http" is camel-cased.  Anyways, this is how you use XHR now:</p>
+
+<pre>
+// Just getting XHR is a mess!
+if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+  request = new XMLHttpRequest();
+} else if (window.ActiveXObject) { // IE
+  try {
+    request = new ActiveXObject('Msxml2.XMLHTTP');
+  } 
+  catch (e) {
+    try {
+      request = new ActiveXObject('Microsoft.XMLHTTP');
+    } 
+    catch (e) {}
+  }
+}
+
+// Open, send.
+request.open('GET', 'https://davidwalsh.name/ajax-endpoint', true);
+request.send(null);
+</pre>
+
+<p>Of course our JavaScript frameworks make XHR more pleasant to work with, but what you see above is a <em>simple</em> example of the XHR mess.</p>
+
+<h2>Basic <code>fetch</code> Usage</h2>
+
+<p>A <code>fetch</code> function is now provided in the global <code>window</code> scope, with the first argument being the URL:</p>
+
+<pre>
+// url (required), options (optional)
+fetch('https://davidwalsh.name/some/url', {
+	method: 'get'
+}).then(function(response) {
+	
+}).catch(function(err) {
+	// Error :(
+});
+</pre>
+
+<p>Much like the updated <a href="https://davidwalsh.name/javascript-battery-api">Battery API</a>, the fetch API uses <a href="https://davidwalsh.name/promises">JavaScript Promises</a> to handle results/callbacks:</p>
+
+<pre>
+// Simple response handling
+fetch('https://davidwalsh.name/some/url').then(function(response) {
+	
+}).catch(function(err) {
+	// Error :(
+});
+
+// Chaining for more "advanced" handling
+fetch('https://davidwalsh.name/some/url').then(function(response) {
+	return //...
+}).then(function(returnedValue) {
+	// ...
+}).catch(function(err) {
+	// Error :(
+});
+</pre>
+
+<p>If you aren't used to <code>then</code> yet, get used to it -- it will soon be everywhere.</p>
+
+
+
+
+<h2>Request Headers</h2>
+<p>The ability to set request headers is important in request flexibility.  You can work with request headers by executing <code>new Headers()</code>:</p>
+
+<pre class="js">
+// Create an empty Headers instance
+var headers = new Headers();
+
+// Add a few headers
+headers.append('Content-Type', 'text/plain');
+headers.append('X-My-Custom-Header', 'CustomValue');
+
+// Check, get, and set header values
+headers.has('Content-Type'); // true
+headers.get('Content-Type'); // "text/plain"
+headers.set('Content-Type', 'application/json');
+
+// Delete a header
+headers.delete('X-My-Custom-Header');
+
+// Add initial values
+var headers = new Headers({
+	'Content-Type': 'text/plain',
+	'X-My-Custom-Header': 'CustomValue'
+});
+</pre>
+
+<p>You can use the <code>append</code>, <code>has</code>, <code>get</code>, <code>set</code>, and <code>delete</code> methods to modify request headers.  To use request headers, create a <code>Request</code> instance :</p>
+
+<pre class="js">
+var request = new Request('https://davidwalsh.name/some-url', {
+	headers: new Headers({
+		'Content-Type': 'text/plain'
+	})
+});
+
+fetch(request).then(function() { /* handle response */ });
+</pre>
+
+<p>Let's have a look at what <code>Response</code> and <code>Request</code> do!</p>
+
+<h2>Request</h2>
+<p>A <code>Request</code> instance represents the request piece of a <code>fetch</code> call. By passing <code>fetch</code> a  <code>Request</code> you can make advanced and customized requests:</p>
+
+<ul>
+<li><code>method</code> - <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>, <code>HEAD</code></li>
+<li><code>url</code> - URL of the request</li>
+<li><code>headers</code> - associated <code>Headers</code> object</li>
+<li><code>referrer</code> - referrer of the request</li>
+<li><code>mode</code> - <code>cors</code>, <code>no-cors</code>, <code>same-origin</code></li>
+<li><code>credentials</code> - should cookies go with the request? <code>omit</code>, <code>same-origin</code></li>
+<li><code>redirect</code> - <code>follow</code>, <code>error</code>, <code>manual</code></li>
+<li><code>integrity</code> - subresource integrity value</li>
+<li><code>cache</code> - cache mode (<code>default</code>, <code>reload</code>, <code>no-cache</code>)</li>
+</ul>
+
+<p>A sample <code>Request</code> usage may look like:</p>
+
+<pre class="js">
+var request = new Request('https://davidwalsh.name/users.json', {
+	method: 'POST', 
+	mode: 'cors', 
+	redirect: 'follow',
+	headers: new Headers({
+		'Content-Type': 'text/plain'
+	})
+});
+
+// Now use it!
+fetch(request).then(function() { /* handle response */ });
+</pre>
+
+<p>Only the first parameter, the URL, is required.  Each property becomes read only once the <code>Request</code> instance has been created.  Also important to note that <code>Request</code> has a <code>clone</code> method which is important when using <code>fetch</code> within the Service Worker API -- a Request is a stream and thus must be cloned when passing to another <code>fetch</code> call.</p>
+
+<p>The <code>fetch</code> signature, however, acts like <code>Request</code> so you could also do:</p>
+
+<pre class="">
+fetch('https://davidwalsh.name/users.json', {
+	method: 'POST', 
+	mode: 'cors', 
+	redirect: 'follow',
+	headers: new Headers({
+		'Content-Type': 'text/plain'
+	})
+}).then(function() { /* handle response */ });
+</pre>
+
+<p>You'll likely only use <code>Request</code> instances within Service Workers since the <code>Request</code> and <code>fetch</code> signatures can be the same. <em>ServiceWorker post coming soon!</em></p>
+
+<h2>Response</h2>
+
+<p>The <code>fetch</code>'s <code>then</code> method is provided a <code>Response</code> instance but you can also manually create <code>Response</code> objects yourself -- another situation you may encounter when using service workers.  With a <code>Response</code> you can configure:</p>
+
+<ul>
+<li><code>type</code> -  <code>basic</code>, <code>cors</code></li>
+<li><code>url</code></li>
+<li><code>useFinalURL</code> - Boolean for if <code>url</code> is the final URL</li>
+<li><code>status</code> -  status code (ex: <code>200</code>, <code> 404</code>, etc.)</li>
+<li><code>ok</code> -  Boolean for successful response (status in the range 200-299)</li>
+<li><code>statusText</code> -  status code (ex: <code>OK</code>)</li>
+<li><code>headers</code> -  Headers object associated with the response.</li>
+</ul>
+
+<pre class="js">
+// Create your own response for service worker testing
+// new Response(BODY, OPTIONS)
+var response = new Response('<html>.....', {
+	ok: false,
+	status: 404,
+	url: '/'
+});
+
+// The fetch's `then` gets a Response instance back
+fetch('https://davidwalsh.name/')
+	.then(function(responseObj) {
+		console.log('status: ', responseObj.status);
+	});
+</pre>
+
+<p>The <code>Response</code> also provides the following methods:</p>
+
+<ul>
+<li><code>clone()</code> - Creates a clone of a Response object.</li>
+<li><code>error()</code> - Returns a new Response object associated with a network error.</li>
+<li><code>redirect()</code> - Creates a new response with a different URL.</li>
+<li><code>arrayBuffer()</code> - Returns a promise that resolves with an ArrayBuffer.</li>
+<li><code>blob()</code> - Returns a promise that resolves with a Blob.</li>
+<li><code>formData()</code> - Returns a promise that resolves with a FormData object.</li>
+<li><code>json()</code> - Returns a promise that resolves with a JSON object.</li>
+<li><code>text()</code> - Returns a promise that resolves with a USVString (text).</li>
+</ul>
+
+<h2>Handling JSON</h2>
+
+<p>Let's say you make a request for JSON -- the resulting callback data has a <code>json</code> method for converting the raw data to a JavaScript object:</p>
+
+<pre>
+fetch('https://davidwalsh.name/demo/arsenal.json').then(function(response) { 
+	// Convert to JSON
+	return response.json();
+}).then(function(j) {
+	// Yay, `j` is a JavaScript object
+	console.log(j); 
+});
+</pre>
+
+<p>Of course that's a simple <code>JSON.parse(jsonString)</code>, but the <code>json</code> method is a handy shortcut.</p>
+
+<h2>Handling Basic Text/HTML Responses</h2>
+
+<p>JSON isn't always the desired request response format so here's how you can work with an HTML or text response:</p>
+
+<pre>
+fetch('/next/page')
+  .then(function(response) {
+    return response.text();
+  }).then(function(text) { 
+  	// &lt;!DOCTYPE ....
+  	console.log(text); 
+  });
+</pre>
+
+<p>You can get the response text via chaining the Promise's <code>then</code> method along with the <code>text()</code> method.</p>
+
+<h2>Handling Blob Responses</h2>
+<p>If you want to load an image via fetch, for example, that will be a bit different:</p>
+<pre class="js">
+fetch('https://davidwalsh.name/flowers.jpg')
+	.then(function(response) {
+	  return response.blob();
+	})
+	.then(function(imageBlob) {
+	  document.querySelector('img').src = URL.createObjectURL(imageBlob);
+	});
+</pre>
+
+<p>The <code>blob()</code> method of the Body mixin takes a Response stream and reads it to completion.</p>
+
+<h2>Posting Form Data</h2>
+
+<p>Another common use case for AJAX is sending form data -- here's how you would use <code>fetch</code> to post form data:</p>
+
+<pre>
+fetch('https://davidwalsh.name/submit', {
+	method: 'post',
+	body: new FormData(document.getElementById('comment-form'))
+});
+</pre>
+
+<p>And if you want to POST JSON to the server:</p>
+
+<pre>
+fetch('https://davidwalsh.name/submit-json', {
+	method: 'post',
+	body: JSON.stringify({
+		email: document.getElementById('email').value
+		answer: document.getElementById('answer').value
+	})
+});
+</pre>
+
+<p>Very easy, very eye-pleasing as well!</p>
+
+
+<h2>Unwritten Story</h2>
+
+<p>
+While <code>fetch</code> is a nicer API to use, the API current doesn't allow for canceling a request, which makes it a non-starter for many developers.
+</p>
+
+<p>The new <code>fetch</code> API seems much saner and simpler to use than XHR.  After all, it was created so that we could do AJAX the right way; <code>fetch</code> has the advantage of hindsight.  I can't wait until <code>fetch</code> is more broadly supported!</p>
+
+<p><em>This is meant to be an introduction to <code>fetch</code>.  For a more in depth look, please visit <a href="http://updates.html5rocks.com/2015/03/introduction-to-fetch">Introduction to Fetch</a>.  And if you're looking for a polyfill, check out <a href="https://github.com/github/fetch">GitHub's implementation</a>.</em></p><!-- secondary ad --><div class="x x-long x-secondary"><a href="https://tkjs.us/2qjWxOs" style=display:block;><object data="https://davidwalsh.name/demo/track-js-2.svg?1500875334" type="image/svg+xml" style="max-width:100%;pointer-events:none;"></object></a></div>
+<!-- guest blogger --></article><div class=article-block style=height:90px><!-- terciary ad --><div class="x x-long x-terciary"><div class=bsa data-bsa="1306951|db3b221ddd8cbba67739ae3837520ffe" style=“height:90px !important;”></div></div>
+</div><div class="article-block post-more" style=“clear:both;”><h2><a href=/tutorials/features>Recent Features<i class="fa fa-arrow-circle-o-right"></i></a></h2><ul class="post-list small-list"><li data-url="https://davidwalsh.name/webgl-demos" itemscope itemtype=http://schema.org/Article><div class=meta>By <a href="http://davidwalsh.name" rel=author itemprop=author itemscope itemtype=https://schema.org/Person><span itemprop=name>David Walsh</span></a><time itemprop=datePublished>July 15, 2013</time></div><span itemscope itemtype=https://schema.org/ImageObject><img data-src="https://davidwalsh.name/demo/webgl-maze.jpg?preview" class=post-image alt="9 Mind-Blowing WebGL Demos" /></span><div class=preview><h3 itemprop=name><a href="https://davidwalsh.name/webgl-demos" itemprop=url>9 Mind-Blowing WebGL&nbsp;Demos</a></h3><p>As much as developers now loathe Flash, we're still playing a bit of catch up to natively duplicate the animation capabilities that Adobe's old technology provided us.  Of course we have <a href="https://davidwalsh.name/tutorials/canvas">canvas</a>, an awesome technology, one which I highlighted <a href="https://davidwalsh.name/canvas-demos">9 mind-blowing demos</a>.  Another technology available...</a></code></p></div></li><li data-url="https://davidwalsh.name/facebook-meta-tags" itemscope itemtype=http://schema.org/Article><div class=meta>By <a href="http://davidwalsh.name" rel=author itemprop=author itemscope itemtype=https://schema.org/Person><span itemprop=name>David Walsh</span></a><time itemprop=datePublished>April 25, 2011</time></div><span itemscope itemtype=https://schema.org/ImageObject><img data-src="https://davidwalsh.name/demo/facebook-developers-logo.png?preview" class=post-image alt="Facebook Open Graph META Tags" /></span><div class=preview><h3 itemprop=name><a href="https://davidwalsh.name/facebook-meta-tags" itemprop=url>Facebook Open Graph META&nbsp;Tags</a></h3><p>It's no secret that Facebook has become a major traffic driver for all types of websites.  Nowadays even large corporations steer consumers toward their Facebook pages instead of the corporate websites directly.  And of course there are Facebook "Like" and "Recommend" widgets on every website.  One...</a></code></p></div></li></ul></div><div class="article-block post-more"><h2><a href=/tutorials/demos>Incredible Demos<i class="fa fa-arrow-circle-o-right"></i></a></h2><ul class="post-list small-list"><li data-url="https://davidwalsh.name/css-selection" itemscope itemtype=http://schema.org/Article><div class=meta>By <a href="http://davidwalsh.name" rel=author itemprop=author itemscope itemtype=https://schema.org/Person><span itemprop=name>David Walsh</span></a><time itemprop=datePublished>December 13, 2010</time></div><span itemscope itemtype=https://schema.org/ImageObject><img data-src="/demo/css3logo250.jpg?preview" class=post-image alt="CSS Selection Styling" /></span><div class=preview><h3 itemprop=name><a href="https://davidwalsh.name/css-selection" itemprop=url>CSS Selection&nbsp;Styling</a></h3><p>The goal of CSS is to allow styling of content and structure within a web page.  We all know that, right?  As CSS revisions arrive, we're provided more opportunity to control.  One of the little known styling option available within the browser is text selection styling.</a></code></p></div></li><li data-url="https://davidwalsh.name/progress-bar-animated-mootools" itemscope itemtype=http://schema.org/Article><div class=meta>By <a href="http://davidwalsh.name" rel=author itemprop=author itemscope itemtype=https://schema.org/Person><span itemprop=name>David Walsh</span></a><time itemprop=datePublished>July 7, 2008</time></div><span itemscope itemtype=https://schema.org/ImageObject><img data-src="https://davidwalsh.name/demo/progress-bar-ex.jpg?preview" class=post-image alt="Animated Progress Bars Using MooTools: dwProgressBar" /></span><div class=preview><h3 itemprop=name><a href="https://davidwalsh.name/progress-bar-animated-mootools" itemprop=url>Animated Progress Bars Using MooTools:&nbsp;dwProgressBar</a></h3><p><a href="https://davidwalsh.name/demo/progress-bar.php"></a>I love progress bars.  It's important that I know roughly what percentage of a task is complete.  I've created a highly customizable MooTools progress bar class that animates to the desired percentage.The Moo-Generated XHTMLThis DIV structure is extremely simple and can be controlled...</a></code></p></div></li></ul></div><!-- <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+			xmlns:dc="http://purl.org/dc/elements/1.1/"
+			xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+		<rdf:Description rdf:about="https://davidwalsh.name/fetch"
+    dc:identifier="https://davidwalsh.name/fetch"
+    dc:title="fetch API"
+    trackback:ping="https://davidwalsh.name/fetch/trackback" />
+</rdf:RDF> --><!-- comments --><div class=article-block><h2 id=comments>Discussion</h2><ol class=comments id=comment-list><li id="comment-501910" data-avatar="//gravatar.com/avatar.php?gravatar_id=58a4f90ffea6e383cc4882f8f0119cad&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='https://rolandwarmerdam.co.nz/' rel='external nofollow' class='url'>Roland Warmerdam</a></div><div class=comment-content><p><code>window.fetch</code> went live in Chrome with yesterday&#8217;s Chrome Stable release.</p>
+</div><div class=comment-controls><a href="#comment-501910"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-501918" data-avatar="//gravatar.com/avatar.php?gravatar_id=376deae39b17fad6cfb354fb62f69f41&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>MaxArt</div><div class=comment-content><p>One of the features that are lost with <code>fetch</code> is monitoring the progression of the upload/download. And I don&#8217;t quite know if it can be restored nicely with a promise-based interface.</p>
+</div><div class=comment-controls><a href="#comment-501918"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-501921" data-avatar="//gravatar.com/avatar.php?gravatar_id=282eed17fcb9682bb2816697482b64ec&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://softwaredesignblog.wordpress.com/' rel='external nofollow' class='url'>Steve</a></div><div class=comment-content><p>I can&#8217;t wait until Spartan 2.0? becomes the minimum browser we need to support! (Until then <code>window.fetch</code> simply isn&#8217;t an option without coding a fallback for IE support) <a href="http://caniuse.com/#search=fetch" rel="nofollow">http://caniuse.com/#search=fetch</a> That all said, I seriously can&#8217;t wait &#8211; it will be awesome to be able to use it.</p>
+</div><div class=comment-controls><a href="#comment-501921"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li><ul class="children">
+<li id="comment-501927" data-avatar="//gravatar.com/avatar.php?gravatar_id=4f4cc88cc2ebd747240c7bc53af99261&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>Tony</div><div class=comment-content><p>Agreed, can&#8217;t wait to start using it. Don&#8217;t mind writing a fallback if need be, this is forward progress =&gt;</p>
+</div><div class=comment-controls><a href="#comment-501927"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-504775" data-avatar="//gravatar.com/avatar.php?gravatar_id=1448d087d72cfb8b32fdd72f881c03ad&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='https://metabox.io/' rel='external nofollow' class='url'>Anh Tran</a></div><div class=comment-content><p>All IE versions and *sadly* Safari don&#8217;t support fetch API yet. The syntax and how it works are very interesting. Can&#8217;t wait to use it in my projects.</p>
+</div><div class=comment-controls><a href="#comment-504775"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li id="comment-501923" data-avatar="//gravatar.com/avatar.php?gravatar_id=f53e5fd4906602f394118c4c4c876835&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>Dave</div><div class=comment-content><p>David, I read your posts and I get confused feelings. I&#8217;m excited using the code in the examples but feel like a bad developer for not knowing this was available to me already. Then I find out it&#8217;s actually not available to me. Might be nice to play with but not for use in production and it would be nice if it was noted that this exciting new API is new and not available in most browsers. I&#8217;m still not even using native promises because of legacy browsers. jQuery has let me get use to coding using promises, and when it&#8217;s available natively in all the browsers I need to support, I&#8217;ll move native. </p>
+<p>Just try and make it clear that use of the example code may not be available in all browsers just yet. Maybe you could add tags for browsers that support whatever API or other features you are discussing.</p>
+</div><div class=comment-controls><a href="#comment-501923"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li><ul class="children">
+<li id="comment-501924" data-avatar="/wp-content/themes/punky/images/logo.png" class=dw><div class=box><div class=comment-user><a href='http://davidwalsh.name' rel='external nofollow' class='url'>David Walsh</a></div><div class=comment-content><p>Please re-read the last sentence of the intro.</p>
+</div><div class=comment-controls><a href="#comment-501924"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li id="comment-501929" data-avatar="//gravatar.com/avatar.php?gravatar_id=c5566eff8434a3815018a95ac71c3d83&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>deDogs</div><div class=comment-content><p>What is different between using <code>fetch</code> and <code>jQuery.ajax</code>? Do we really needing something else on the global scope, which adds additional project weight. Some occasions fetch may not be needed in a project.</p>
+</div><div class=comment-controls><a href="#comment-501929"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li><ul class="children">
+<li id="comment-501930" data-avatar="/wp-content/themes/punky/images/logo.png" class=dw><div class=box><div class=comment-user><a href='http://davidwalsh.name' rel='external nofollow' class='url'>David Walsh</a></div><div class=comment-content><p><code>fetch</code> is native and <code>jQuery.ajax</code> is a library method.</p>
+<p>If you&#8217;re looking to remove something from the global scope, <code>jQuery</code> is probably the one to remove.  :)</p>
+</div><div class=comment-controls><a href="#comment-501930"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-505233" data-avatar="//gravatar.com/avatar.php?gravatar_id=9d5c42129312490bfc6465c453b63166&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://ageoftalisman.com' rel='external nofollow' class='url'>Chris</a></div><div class=comment-content><p>haha I agree. Although I hate jquery for stealing code to claim but hey whatever!. You just re-share and respost other peoples work David. Lets not get big headed we all do it. jQuery just simply removed you from the pic and in return they saved users time. I enjoy coding my won faster more direct to the punch functions and handles my self. I am only complaining because you are a cocky prick. You&#8217;re welcome!</p>
+</div><div class=comment-controls><a href="#comment-505233"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-506571" data-avatar="//gravatar.com/avatar.php?gravatar_id=2309d99696f6173debbda140598a0833&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>Blair</div><div class=comment-content><p>I think you might be having a stroke. Please call a doctor.</p>
+<p>Also, this entire article has nothing to do with jQuery. The fetch API is built into the global scope of Firefox and Chrome Canary. Futhermore, David isn&#8217;t &#8220;repost other peoples work&#8221;, he&#8217;s writing a blog post on how the API works.</p>
+<p>I can&#8217;t even begin to respond to how asinine deDogs&#8217;s question was; jQuery is an external library which has nothing to do with the fetch API, it has nothing to do with &#8220;project weight&#8221;, and if you&#8217;re writing an application being run in Chrome or Firefox and not making a single ajax call, then what are you even writing (aside from a 100% offline app)?</p>
+<p>It baffles me how people like this even figure out how to leave comments. &gt;_&lt;</p>
+</div><div class=comment-controls><a href="#comment-506571"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li id="comment-502147" data-avatar="//gravatar.com/avatar.php?gravatar_id=022638e8294772c48284cbf20d7e28ee&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='https://arne.schlueter.is' rel='external nofollow' class='url'>Arne</a></div><div class=comment-content><p>Hey David, great writeup, thanks a lot!<br />
+I&#8217;m a bit confused about the JSON part though:<br />
+You say</p>
+</div><div class=comment-controls><a href="#comment-502147"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-502148" data-avatar="//gravatar.com/avatar.php?gravatar_id=022638e8294772c48284cbf20d7e28ee&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='https://arne.schlueter.is' rel='external nofollow' class='url'>Arne</a></div><div class=comment-content><p>Hey David, great writeup, thanks a lot!<br />
+I&#8217;m a bit confused about the JSON part though:<br />
+You say </p>
+<pre class="javascript">return response.json()</pre>
+<p> is like calling </p>
+<pre class="javascript">JSON.stringify()</pre>
+<p> on the response body, but the next </p>
+<pre class="javascript">then</pre>
+<p> takes a js object as a parameter — so isn&#8217;t it more like </p>
+<pre class="js">JSON.parse(responseBody)</pre>
+<p> then?</p>
+</div><div class=comment-controls><a href="#comment-502148"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li><ul class="children">
+<li id="comment-502224" data-avatar="/wp-content/themes/punky/images/logo.png" class=dw><div class=box><div class=comment-user><a href='http://davidwalsh.name' rel='external nofollow' class='url'>David Walsh</a></div><div class=comment-content><p>You&#8217;re right!  Updated!</p>
+</div><div class=comment-controls><a href="#comment-502224"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li id="comment-502225" data-avatar="//gravatar.com/avatar.php?gravatar_id=799a8a6502aff3268519382ea2837d4b&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://webreflection.blogspot.com/' rel='external nofollow' class='url'>Andrea Giammarchi</a></div><div class=comment-content><p>I don&#8217;t understand why you are omitting that progress notification as well as an equivalent of abort are missing.</p>
+<p>I also don&#8217;t understand why you wen&#8217;t full polyfill down to IE 5 for XHR, underlying how mess is that, and didn&#8217;t show how worst would be the full polyfill down to IE 5 for fetch, including the Promises polyfill.</p>
+<p>It looks like the community is putting effort to emphasize so much how bad is XHR &#8230;. this is the part I like the least about the entire fetch story.</p>
+</div><div class=comment-controls><a href="#comment-502225"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li><ul class="children">
+<li id="comment-502226" data-avatar="/wp-content/themes/punky/images/logo.png" class=dw><div class=box><div class=comment-user><a href='http://davidwalsh.name' rel='external nofollow' class='url'>David Walsh</a></div><div class=comment-content><p>I added a block about the inability to cancel! :)</p>
+</div><div class=comment-controls><a href="#comment-502226"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-505736" data-avatar="//gravatar.com/avatar.php?gravatar_id=82bc4ac0568d72b4fa5d731f6b1e0639&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://sam.js.org' rel='external nofollow' class='url'>JJ</a></div><div class=comment-content><p>Not sure if you heard about the <a href="http://sam.js.org" rel="nofollow">SAM pattern</a> and the corresponding <a href="https://www.npmjs.com/package/rstats" rel="nofollow">SAFE middleware</a>, it supports cancellation (as in ignore the response) in a generic and very simple way (what I call &#8220;action hang back&#8221;).</p>
+</div><div class=comment-controls><a href="#comment-505736"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li id="comment-502227" data-avatar="//gravatar.com/avatar.php?gravatar_id=799a8a6502aff3268519382ea2837d4b&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://webreflection.blogspot.com/' rel='external nofollow' class='url'>Andrea Giammarchi</a></div><div class=comment-content><p>and could you also drop that polyfill which is completely unfair or out of context? Do you really have to show that? Because it&#8217;s not clear what&#8217;s the point.</p>
+<p>Show 6 LOC to get fetch cross platform down to old IE and in few lines of code, including standard Promise polyfill, or maybe simply show the difference between APIs.</p>
+<p>XHR is just fine, where does Fetch API shine? Why should we consider it? Which browser is compatible? How big is the polyfill?</p>
+<p>The argument XHR is ugly, with all the problems we have on the Web, feels so childish.</p>
+<p>Apologies for the comment, I just don&#8217;t understand this &#8220;mafia&#8221; style war against XHR.</p>
+<p>&#8220;There&#8217;s a new API, it does things in a Promise friendly way, here how to use it =&gt; &#8221; would be that kind of post I&#8217;d expect from your blog.</p>
+<p>Not another &#8220;XHR is ugly, long glory to the beautiful Fetch API&#8221;, I am sure you know what I mean.</p>
+<p>Regards</p>
+</div><div class=comment-controls><a href="#comment-502227"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li><ul class="children">
+<li id="comment-502228" data-avatar="/wp-content/themes/punky/images/logo.png" class=dw><div class=box><div class=comment-user><a href='http://davidwalsh.name' rel='external nofollow' class='url'>David Walsh</a></div><div class=comment-content><p>I just re-read my post, thinking by your comments that I may have said something too harsh, but I&#8217;m not seeing it&#8230;</p>
+<p>&#8220;One of the worst kept secrets about AJAX on the web is that the underlying API for it, <code>XMLHttpRequest</code>, wasn&#8217;t really made for what we&#8217;ve been using it for.&#8221; &#8211; I feel that&#8217;s true.</p>
+<p>&#8220;We&#8217;ve done well to create elegant APIs around XHR but we know we can do better.  Our effort to do better is the fetch API.&#8221;&#8221; &#8211; I feel that&#8217;s also true.</p>
+<p>Nowhere did I use the word &#8220;ugly&#8221;.  I did use &#8220;mess&#8221;, but getting XHR is a bit of a mess, no?  Three different checks?</p>
+<p>I&#8217;m appreciate of XHR and how we&#8217;ve used it, but I&#8217;m excited about a new API which was developed with XHR history in mind.</p>
+</div><div class=comment-controls><a href="#comment-502228"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-502233" data-avatar="//gravatar.com/avatar.php?gravatar_id=799a8a6502aff3268519382ea2837d4b&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://webreflection.blogspot.com/' rel='external nofollow' class='url'>Andrea Giammarchi</a></div><div class=comment-content><p>you don&#8217;t have 3 different checks &#8230; nobody does. Same you don&#8217;t have different checks to grab fetch, because it&#8217;s not cross platform. XHR is cross platform, and if you want to support IE &lt; 9 you need only 2 extra checks. What do you need to do in order to have fetch cross platform? just 2 checks and few lines to have it? Or you need the entire fetch polyfill plus the entire Promises polyfill? What is the point of showing a polyfill for a well supported API, which is XHR, when the new one is not even supported at all? This is the part I don&#039;t understand, you are saying: here, few lines of code to have a cross browser API that works down to IE5 &#8230; compare against one that does not even exists, how better is the new one?</p>
+<p>I don&#039;t know &#8230; because the new one does not show how many lines of code you need to have it, while XHR can be shimmed in just those few lines.</p>
+<p>So, compare XHR, its ease everyone knows, its cross browser compatibility, against something that will never work down to IE &lt; 9 and every other Mobile Web browser &#8230; how pointless is this comparison? Do you really not get it? You compared a library to polyfll an API agtainst an API that will need more libraries in order to be supported, than just few lines.</p>
+<p>I don&#039;t how else I can explain this, sorry.</p>
+</div><div class=comment-controls><a href="#comment-502233"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-502234" data-avatar="/wp-content/themes/punky/images/logo.png" class=dw><div class=box><div class=comment-user><a href='http://davidwalsh.name' rel='external nofollow' class='url'>David Walsh</a></div><div class=comment-content><p>I understand your viewpoint now.  I&#8217;ll think on it, re-evaluate what you&#8217;ve written, and update my post as I see fit.  Thanks!</p>
+</div><div class=comment-controls><a href="#comment-502234"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-502235" data-avatar="//gravatar.com/avatar.php?gravatar_id=799a8a6502aff3268519382ea2837d4b&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://webreflection.blogspot.com/' rel='external nofollow' class='url'>Andrea Giammarchi</a></div><div class=comment-content><p>or to make it a TL;DR &#8230; if just getting XHR is considered a mess for few lines of code, show how mess would be to have fetch API compatible with the same amount of browsers in just few lines of code. Here the catch: you cannot. If you need only 3 checks to polyfill XHR, you need 10X the amount of code and libraries to have Fetch API equivalently compatible and supported cross platform and cross browsers. Which part I am not explaining properly here?</p>
+</div><div class=comment-controls><a href="#comment-502235"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-502236" data-avatar="/wp-content/themes/punky/images/logo.png" class=dw><div class=box><div class=comment-user><a href='http://davidwalsh.name' rel='external nofollow' class='url'>David Walsh</a></div><div class=comment-content><p>Andrea:  I understand what you&#8217;re saying.  Chill.</p>
+</div><div class=comment-controls><a href="#comment-502236"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-503730" data-avatar="//gravatar.com/avatar.php?gravatar_id=016775e869b4a6c2e13e0e938b974016&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='https://rreverser.com' rel='external nofollow' class='url'>Ingvar Stepanyan</a></div><div class=comment-content><p>One particular thing in which I totally agree with Andrea here is that <code>XMLHttpRequest</code> example is completely unfair as ActiveX polyfill is not needed for IE&gt;6 (and modern projects usually have even higher bar, at least IE8+). This part should be updated.</p>
+</div><div class=comment-controls><a href="#comment-503730"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-503725" data-avatar="//gravatar.com/avatar.php?gravatar_id=016775e869b4a6c2e13e0e938b974016&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='https://rreverser.com' rel='external nofollow' class='url'>Ingvar Stepanyan</a></div><div class=comment-content><p>&#8220;when the new one is not even supported at all?&#8221; &#8211; this is not true. Already using in FF and Chrome without polyfills.</p>
+</div><div class=comment-controls><a href="#comment-503725"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li id="comment-502229" data-avatar="//gravatar.com/avatar.php?gravatar_id=a2e67306b1963f8eaf625bf3adce783b&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>Florent</div><div class=comment-content><p>Maybe worth to note that with async/await in ES7 (or with task.js with ES6), it will be funnier:</p>
+<pre class="javascript">
+(async function() {
+  let response = await fetch('http://davidwalsh.name/demo/arsenal.json');
+  let json = await response.json();
+  console.log(json);
+})();
+</pre>
+<p>Or with task.js:</p>
+<pre class="javascript">
+spawn(function* () {
+  let response = yield fetch('http://davidwalsh.name/demo/arsenal.json');
+  let json = yield response.json();
+  console.log(json);
+}
+</pre>
+</div><div class=comment-controls><a href="#comment-502229"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li><ul class="children">
+<li id="comment-505229" data-avatar="//gravatar.com/avatar.php?gravatar_id=405e7470021bfb9b94b66c92fbec6a91&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://www.enduranceiq.com' rel='external nofollow' class='url'>Eric</a></div><div class=comment-content><p>I like the await syntax a lot.</p>
+</div><div class=comment-controls><a href="#comment-505229"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li id="comment-502438" data-avatar="//gravatar.com/avatar.php?gravatar_id=2fe96fe4513932ff30af562241c9db28&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>Ambrose</div><div class=comment-content><p>Stop trying to make fetch happen. It&#8217;s not going to happen.</p>
+</div><div class=comment-controls><a href="#comment-502438"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li><ul class="children">
+<li id="comment-503334" data-avatar="//gravatar.com/avatar.php?gravatar_id=a1d36557acc986bdbb7e68f6f1bd37db&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>Sean</div><div class=comment-content><p>&#8220;Stop trying to make X happen. It&#8217;s not going to happen.&#8221;<br />
+Yep, let&#8217;s just abandon all technological progression because it isn&#8217;t going to be immediately used en masse.</p>
+</div><div class=comment-controls><a href="#comment-503334"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-504088" data-avatar="/wp-content/themes/punky/images/logo.png" class=dw><div class=box><div class=comment-user><a href='http://davidwalsh.name' rel='external nofollow' class='url'>David Walsh</a></div><div class=comment-content><p>He&#8217;s quoting a funny movie  :)</p>
+</div><div class=comment-controls><a href="#comment-504088"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li id="comment-503492" data-avatar="//gravatar.com/avatar.php?gravatar_id=a34df7f22687266ac5d1d6cf5df96378&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>vsync</div><div class=comment-content><p>What about cross-domain? This is totally ignored in this article and comments, oddly :/</p>
+</div><div class=comment-controls><a href="#comment-503492"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li><ul class="children">
+<li id="comment-503724" data-avatar="//gravatar.com/avatar.php?gravatar_id=016775e869b4a6c2e13e0e938b974016&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='https://rreverser.com' rel='external nofollow' class='url'>Ingvar Stepanyan</a></div><div class=comment-content><p>It&#8217;s just another API for same old good <code>XMLHttpRequest</code>, cross-domain behaves just like always did.</p>
+</div><div class=comment-controls><a href="#comment-503724"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li id="comment-503923" data-avatar="//gravatar.com/avatar.php?gravatar_id=23c6d359b6f7af3d3f91ca9e17b804b3&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://www.peterbe.com/' rel='external nofollow' class='url'>Peter Bengtsson</a></div><div class=comment-content><p>Don&#8217;t forget, by default, the <code>fetch()</code> won&#8217;t send cookies like good old jQuery did. To change that use <code>{credentials: 'same-origin'}</code>, like this:</p>
+<pre class="js">
+ fetch('/amisignedin', {credentials: 'same-origin'})
+ .then(....)</pre>
+</div><div class=comment-controls><a href="#comment-503923"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li><ul class="children">
+<li id="comment-504171" data-avatar="/wp-content/themes/punky/images/logo.png" class=dw><div class=box><div class=comment-user><a href='http://davidwalsh.name' rel='external nofollow' class='url'>David Walsh</a></div><div class=comment-content><p>Updated Peter!  Thank you!</p>
+</div><div class=comment-controls><a href="#comment-504171"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-506681" data-avatar="//gravatar.com/avatar.php?gravatar_id=b559261dbe8405569e5aa049d9d55a99&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://matthias.rocks' rel='external nofollow' class='url'>Matthias Nielsen</a></div><div class=comment-content><p>Thank you so very, very much! </p>
+<p>I am building an application with a React frontend fetching data from a Java Spring backend and was on brink of despair not understanding why my REST calls were redirected to the login page although client authentication had been successful.</p>
+<p>Now its work perfectly :)</p>
+</div><div class=comment-controls><a href="#comment-506681"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li id="comment-504342" data-avatar="//gravatar.com/avatar.php?gravatar_id=63b3246192fa1d22db61e3c4f55f80d7&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>Mike Holloway</div><div class=comment-content><p>This is one article I keep coming back to because I find it informative and clear. Thanks dude.</p>
+</div><div class=comment-controls><a href="#comment-504342"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-504410" data-avatar="//gravatar.com/avatar.php?gravatar_id=8d9aba79be37c3e972c9d572ee7dc66b&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='https://franciskim.co' rel='external nofollow' class='url'>Francis Kim</a></div><div class=comment-content><p><code>fetch()</code> really seems to be the way to go these days, thanks for the write up.</p>
+</div><div class=comment-controls><a href="#comment-504410"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-504613" data-avatar="//gravatar.com/avatar.php?gravatar_id=d6524862e66eda3a9bc094075ebddfec&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>Miguel</div><div class=comment-content><p>Hi!</p>
+<p>Every place i see samples of fetch, i see two calls to &#8220;then&#8221; chained, as you did in here</p>
+<pre class="javascript">
+fetch('http://davidwalsh.name/demo/arsenal.json').then(function(response) { 
+	// Convert to JSON
+	return response.json();
+}).then(function(j) {
+	// Yay, <code>j</code> is a JavaScript object
+	console.log(j); 
+});
+</pre>
+<p>Is it needed? is it just a good practice? I mean, could you just have the following?</p>
+<pre class="javascript">
+fetch('http://davidwalsh.name/demo/arsenal.json').then(function(response) { 
+	// Convert to JSON
+	let j = response.json();
+        return j.aProperty || whateverWith(j);
+});
+</pre>
+<p>Thank you :-)</p>
+</div><div class=comment-controls><a href="#comment-504613"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li><ul class="children">
+<li id="comment-504893" data-avatar="/wp-content/themes/punky/images/logo.png" class=dw><div class=box><div class=comment-user><a href='http://davidwalsh.name' rel='external nofollow' class='url'>David Walsh</a></div><div class=comment-content><p><code>response.json()</code> returns a promise (representing the process to convert the string to JSON).  That&#8217;s why you need the second <code>then()</code>!</p>
+</div><div class=comment-controls><a href="#comment-504893"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-504905" data-avatar="//gravatar.com/avatar.php?gravatar_id=a01b931867096ec8874202e233279212&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='https://twitter.com/sstur_' rel='external nofollow' class='url'>Simon Sturmer</a></div><div class=comment-content><p>It&#8217;s not too clear in this article, but at the time the first promise resolves, we do NOT YET have the response body (the part that will be parsed to JSON) so you can think of <code>.json()</code> part as something like <code>.setParserToUseJSON()</code> and then returns another promise when the body has been received and parsed.</p>
+<p>I didn&#8217;t understand the fetch API well until I finally understood promises. A <code>then</code> handler that returns another promise is special and really unlocks the power of promises, but it&#8217;s not easy for a newcomer to understand by reading example code!</p>
+<p>@DavidWalsh: I think it might be confusing to readers to say &#8220;the resulting callback data has a json method [&#8230;] Of course that&#8217;s a simple <code>JSON.parse(jsonString)</code>, but the json method is a handy shortcut.&#8221;</p>
+<p>It&#8217;s not really a shortcut for JSON.parse alone, but does some magic with response buffering and parsing and eventually *resolves* to a result similar to that of calling <code>JSON.parse</code>!</p>
+<p>Might need some more explaining because I remember when I first came to fetch thinking &#8220;This is complicated by all this Promise stuff and double then.. why don&#8217;t we just have a simple node-style callback?&#8221; But now I understand how this abstracts the underlying process into a nice Promise API.</p>
+</div><div class=comment-controls><a href="#comment-504905"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-506340" data-avatar="//gravatar.com/avatar.php?gravatar_id=8683388317311914bd9daad5a22232ad&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>Sangeet Agarwal</div><div class=comment-content><p>wrote a pen to help understand what might be happening behind the scenes, thought I should share it, I think this should approximate what mitht be happening &#8230;<br />
+See the Pen <a href="<a href="http://codepen.io/Sangeet/pen/BzJOwj/" rel="nofollow">fetch Api pseudo code</a> by Sangeet (<a href="http://codepen.io/Sangeet" rel="nofollow">@Sangeet</a>) on <a href="http://codepen.io" rel="nofollow">CodePen</a>.&#8221;>http://codepen.io/Sangeet/pen/BzJOwj/&#8221; rel=&#8221;nofollow&#8221;>fetch Api pseudo code by Sangeet (<a href="http://codepen.io/Sangeet" rel="nofollow">@Sangeet</a>) on <a href="http://codepen.io" rel="nofollow">CodePen</a>.</p>
+<pre class=codepen data-type=result data-href="BzJOwj/" rel="nofollow">fetch Api pseudo code by Sangeet (<a href="http://codepen.io/Sangeet" rel="nofollow">@Sangeet</a>) on <a href="http://codepen.io" rel="nofollow">CodePen</a>." data-user="Sangeet"><code></code></pre>
+</div><div class=comment-controls><a href="#comment-506340"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li id="comment-504991" data-avatar="//gravatar.com/avatar.php?gravatar_id=72f5ee17de10c6d918be62ebd03a7edc&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='https://github.com/inca' rel='external nofollow' class='url'>Boris Okunskiy</a></div><div class=comment-content><p>Hey David! Just a heads up: looks like text starting with &#8220;Response&#8221; heading is incorrectly wrapped inside h2 up to the next heading.</p>
+<p>P.S. Thanks for awesome reading!</p>
+</div><div class=comment-controls><a href="#comment-504991"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-505091" data-avatar="//gravatar.com/avatar.php?gravatar_id=ce03e08888d310cd88add1757ffd5242&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://stackabuse.com' rel='external nofollow' class='url'>Scott Robinson</a></div><div class=comment-content><p>&#8220;One of the worst kept secrets about AJAX on the web is that the underlying API for it, XMLHttpRequest, wasn&#8217;t really made for what we&#8217;ve been using it for.&#8221;</p>
+<p>I feel like this is so true for _everything_ on the web :)</p>
+<p>Great article, David!</p>
+</div><div class=comment-controls><a href="#comment-505091"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-505368" data-avatar="//gravatar.com/avatar.php?gravatar_id=87c6bac94648999ceaac22c248df81e0&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>Dusty</div><div class=comment-content><p>I would like to access the certificate on the https server I connect to, to verify its fingerprint.</p>
+<p>Is it possible to id using fetch? If not, how could I do it?</p>
+</div><div class=comment-controls><a href="#comment-505368"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-506236" data-avatar="//gravatar.com/avatar.php?gravatar_id=464c93be18faf0f7560a4bdf9a5fa063&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>Johan</div><div class=comment-content><p>When I run the example code from your post</p>
+<pre class="javascript">var request = new Request('/some-url', {
+	headers: new Headers({
+		'Content-Type': 'text/plain'
+	})
+});
+
+fetch(request).then(function() { /* handle response */ });</pre>
+<p> in Firefox (version 47), it sends a request to <code>https://davidwalsh.name/[object%20Object]</code>. The <code>Content-Type</code> is nowhere to be seen, either. (And it should have been <code>Accept</code>, by the way.)</p>
+</div><div class=comment-controls><a href="#comment-506236"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li><ul class="children">
+<li id="comment-508306" data-avatar="/wp-content/themes/punky/images/logo.png" class=dw><div class=box><div class=comment-user><a href='http://davidwalsh.name' rel='external nofollow' class='url'>David Walsh</a></div><div class=comment-content><p>My site uses MooTools, which is overriding Request()</p>
+</div><div class=comment-controls><a href="#comment-508306"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li id="comment-506836" data-avatar="//gravatar.com/avatar.php?gravatar_id=ee3cbc09afac0814379596fa8d56bbc1&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>Andrew</div><div class=comment-content><p>Hey David,</p>
+<p>Great site and very clear &#8211; and it was one of the top google results!</p>
+<p>I&#8217;m using fetch now and finding it great &#8211; except I have no idea how to get the error when we catch!  I get TypeError &#8220;failed to fetch&#8221; and that&#8217;s it.  I&#8217;m using TypeScript, but I would have expected a response code, and message?</p>
+<p>I&#8217;d love to be able to indicate to my users why their POST failed, but without the ability to retrieve that message I&#8217;m lost.  I&#8217;ve tried googling it and finding no help &#8211; any ideas?</p>
+</div><div class=comment-controls><a href="#comment-506836"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-506915" data-avatar="//gravatar.com/avatar.php?gravatar_id=657cf1515ec964b2d3146f3e1376b9ab&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>Qi Fan</div><div class=comment-content><p>If used within a web worker, <code>JSON.parse(longLongString)</code> blocks the main GUI thread in certain browsers, for whatever reason.</p>
+<p>The <code>.json()</code> on the other hand, doesn&#8217;t affect a different thread.</p>
+</div><div class=comment-controls><a href="#comment-506915"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-507064" data-avatar="//gravatar.com/avatar.php?gravatar_id=a574b3ac72b1a9e76e2313d7ab0883f6&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://www.webdevelopers.eu' rel='external nofollow' class='url'>Jan Filein</a></div><div class=comment-content><p>You don&#8217;t need to start on XMLHttpRequest upper/lower case&#8230;</p>
+<p>&#8220;The built-in JavaScript libraries use the same naming conventions as Java. Data types and constructor functions use upper camel case (RegExp, TypeError, XMLHttpRequest, DOMObject) and methods use lower camel case (getElementById, getElementsByTagNameNS, createCDATASection). In order to be consistent most JavaScript developers follow these conventions.[citation needed] See also: Douglas Crockford&#8217;s conventions&#8221;</p>
+</div><div class=comment-controls><a href="#comment-507064"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-507065" data-avatar="//gravatar.com/avatar.php?gravatar_id=a574b3ac72b1a9e76e2313d7ab0883f6&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://www.webdevelopers.eu' rel='external nofollow' class='url'>Jan Filein</a></div><div class=comment-content><p>Forgot source: <a href="https://en.wikipedia.org/wiki/Naming_convention_(programming)" rel="nofollow">https://en.wikipedia.org/wiki/Naming_convention_(programming)</a></p>
+</div><div class=comment-controls><a href="#comment-507065"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-507389" data-avatar="//gravatar.com/avatar.php?gravatar_id=1fea127ee6dcf856a558832f4756313f&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://www.instinctive.de' rel='external nofollow' class='url'>Alexander Ewering</a></div><div class=comment-content><p>Ehh, talk about the &#8220;overcomplicated&#8221; XMLHttpRequest API (to which I agree), but then you have to create a NEW HEADERS OBJECT to set Headers? Uhm&#8230;</p>
+</div><div class=comment-controls><a href="#comment-507389"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-507586" data-avatar="//gravatar.com/avatar.php?gravatar_id=cbb232211c4080be33faaec3adce0b94&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://twitter.com/thrik' rel='external nofollow' class='url'>Ryan Williams</a></div><div class=comment-content><p>Thanks for the really useful overview. I&#8217;m enjoying experimenting with fetch along with a Polyfill.</p>
+<p>Small tweak that I&#8217;m sure everyone has just quickly fixed upon experimenting with your examples, but just a note that in the final &#8216;And if you want to POST JSON to the server&#8217; example there should be a comma separator between the two JSON properties.</p>
+</div><div class=comment-controls><a href="#comment-507586"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-507599" data-avatar="//gravatar.com/avatar.php?gravatar_id=3c2a2b4262f4d92ae1aa9b1185d7f472&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://github.com/nicbarker' rel='external nofollow' class='url'>Nic Barker</a></div><div class=comment-content><p>Just another heads up, if you&#8217;re wanting to include credentials cross domain (for example our API server sits on a subdomain different to the front end app) the correct value for credentials is </p>
+<pre class="javascript">{credentials: 'include'}</pre>
+</div><div class=comment-controls><a href="#comment-507599"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-507736" data-avatar="//gravatar.com/avatar.php?gravatar_id=a37691b398bbb9b6cdffb5c9b4e0a818&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://ericrovtar.com' rel='external nofollow' class='url'>Eric</a></div><div class=comment-content><p>David, this is an awesome article. Thanks for writing it.</p>
+<p>Quick question: In Firefox, when I&#8217;m trying to use the .then() function and log my response, I&#8217;m often getting an object that just has</p>
+<p>: pending</p>
+<p>Not certain what&#8217;s going on and wondered if you had any ideas.</p>
+<p>Thanks!</p>
+<p>-Eric</p>
+</div><div class=comment-controls><a href="#comment-507736"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-507802" data-avatar="//gravatar.com/avatar.php?gravatar_id=9bafecfc25035ceb6801a8bd87845bc7&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://iamarshad.com' rel='external nofollow' class='url'>Arshad Khan</a></div><div class=comment-content><p>I tried posting json to server but somehow I wasnt able to find it req.body but after adding content-type I was able to get the data on server side. In your <code>post json to server</code> example, have you intentionally left out the <code>Content-Type</code> key ?</p>
+</div><div class=comment-controls><a href="#comment-507802"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-508547" data-avatar="//gravatar.com/avatar.php?gravatar_id=c510febb9bed68b5cc4a09f076701e0f&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user><a href='http://ce' rel='external nofollow' class='url'>Anon</a></div><div class=comment-content><p>Fetch API cannot load <a href="https://davidwalsh.name/flowers.jpg" rel="nofollow">https://davidwalsh.name/flowers.jpg</a>. No &#8216;Access-Control-Allow-Origin&#8217; header is present on the requested resource. Origin &#8216;http://localhost:56028&#8217; is therefore not allowed access. The response had HTTP status code 404. If an opaque response serves your needs, set the request&#8217;s mode to &#8216;no-cors&#8217; to fetch the resource with CORS disabled.</p>
+</div><div class=comment-controls><a href="#comment-508547"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+<li id="comment-508798" data-avatar="//gravatar.com/avatar.php?gravatar_id=7b27d41bc94bc689f23c33aa62157dcb&size=48&rating=G&default=https://davidwalsh.name/wp-content/themes/punky/images/anon.jpg"><div class=box><div class=comment-user>oliver</div><div class=comment-content><p>What is the best way of passing url query parameters as an object when using fetch? I know that this is not something that the fetch API supports.</p>
+</div><div class=comment-controls><a href="#comment-508798"><i class="fa fa-bookmark" aria-hidden=true></i></a></div></div></li></li><!-- #comment-## -->
+</ol></div><div class=article-block><div id=comment-form-holder><div id=comment-form><form action=/wp-comments-post.php id=cForm method=post><label><span class=label>Name:</span><input placeholder=Name type=text name=author maxlength=50 required></label><label><span class=label>Email:</span><input placeholder=Email name=email type=email required></label><label><span class=label>Website:</span><input placeholder=Website type=text name=url></label><p class=hint>Wrap your code in <code>&lt;pre class="{language}"&gt;&lt;/pre&gt;</code> tags, link to a GitHub gist, JSFiddle fiddle,  or CodePen pen to embed!</p><textarea id=comment name=comment tabindex="4" required=required></textarea><label id="prompt-comment-subscribe"><input type="checkbox" name="prompt_comment_subscribe" value="1" />&nbsp;<span>Continue this conversation via email</span></label><input type=hidden id=comment_parent name=comment_parent><input type=hidden name=comment_post_ID value="25359"><input type=submit name=submit value="Post Comment!" class=green-button><button id=launch-editor type=button>Use Code Editor</button></form></div></div></div><!--/CONTENT--></main></div></div><!-- site footer --><footer><div class=center><div class=social><ul class=social-icons><li><a href=/feed data-noxhr=true class=rss><i class="fa fa-rss" aria-hidden=true></i></a></li><li><a href=//twitter.com/davidwalshblog rel=nofollow class=twitter><i class="fa fa-twitter" aria-hidden=true></i></a></li><li><a href=//facebook.com/davidwalshblog rel=nofollow class=facebook><i class="fa fa-facebook" aria-hidden=true></i></a></li><li><a href="https://plus.google.com/114538814489633467974?rel=author" rel=nofollow class=google-plus><i class="fa fa-google-plus" aria-hidden=true></i></a></li><li><a href=//github.com/darkwing rel=nofollow class=github><i class="fa fa-github" aria-hidden=true></i></a></li><li><a href=//linkedin.com/in/davidjameswalsh rel=nofollow class=linkedin><i class="fa fa-linkedin" aria-hidden=true></i></a></li></ul></div><p><span>&copy; David Walsh 2007-2017.  All code <a href=http://opensource.org/licenses/MIT rel=nofollow>MIT license</a>.</span><span>Hosting by <a href=http://dwf.tw/mt rel=nofollow>Media Temple</a>.</span></p></div></footer><!-- scripts --><script src="/wp-content/themes/punky/js/libs/curl/dist/curl-kitchen-sink/curl.js" onload="curl(z,['main'])" async></script><script>!function(e){var t=e.createElement("link"),s="setAttribute";t[s]("type","text/css"),t[s]("rel","stylesheet"),t[s]("href","//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"),e.body.appendChild(t)}(z.d);!function(e){var t=e.documentElement,n="fonts-loaded";if(-1==t.className.indexOf(n)){var s=e.createElement("link"),a="setAttribute";s.onload=function(){t.className+=" "+n},s[a]("type","text/css"),s[a]("rel","stylesheet"),s[a]("href",z.themePath+"/fonts.css"),e.body.appendChild(s)}}(z.d);</script><script type='text/javascript' src='https://davidwalsh.name/wp-includes/js/wp-embed.min.js?ver=4.8'></script>
+<script type='text/javascript' src='https://davidwalsh.name/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='https://davidwalsh.name/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var prompt_comment_form_env = {"url":"https:\/\/davidwalsh.name\/wp-admin\/admin-ajax.php","nonce":"85f25733d9","action":"prompt_comment_unsubscribe","post_id":"25359"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://davidwalsh.name/wp-content/plugins/postmatic-premium/vendor/plugins/postmatic/js/comment-form.min.js?ver=2.0.0'></script>
+<script type=text/javascript>
+adroll_adv_id = "ZMY7MBBFIFDUBAVNOE7XUJ";
+adroll_pix_id = "JPUOHWQVQZBGBBTRCVCUVP";
+/* OPTIONAL: provide email to improve user identification */
+/* adroll_email = "username@example.com"; */
+/*
+(function () {
+var _onload = function(){
+if (document.readyState && !/loaded|complete/.test(document.readyState)){setTimeout(_onload, 10);return}
+if (!window.__adroll_loaded) {__adroll_loaded=true;setTimeout(_onload, 50);return}
+var scr = document.createElement("script");
+var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+scr.setAttribute('async', 'true');
+scr.type = "text/javascript";
+scr.src = host + "/j/roundtrip.js";
+((document.getElementsByTagName('head') || [null])[0] ||
+document.getElementsByTagName('script')
+[0].parentNode).appendChild(scr);
+};
+if (window.addEventListener) {window.addEventListener('load', _onload, false);} else {window.attachEvent('onload', _onload)}
+}());
+*/
+</script></body></html>

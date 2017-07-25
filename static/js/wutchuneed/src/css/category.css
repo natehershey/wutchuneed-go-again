@@ -1,0 +1,52 @@
+.category-name {
+  font-size: 2.2rem;
+  padding-left: 2rem;
+  display: inline;
+}
+.edit-category-name {
+  font-size: 2.2rem;
+  padding-left: 2rem;
+  display: inline;
+}
+
+.category-header-row{
+  background-color: orange;
+  display: inline-block;
+  width: 100%;
+}
+.edit-category-container{
+  display: inline-block;
+}
+.edit-category-buttons-container{
+  display: inline-block;
+}
+
+.edit-category-name-buttons-container {
+  display: inline-block;
+}
+.edit-category-button {
+  display: inline;
+}
+.edit-category-image {
+  height: 3rem;
+}
+
+.edit-category-name-button {
+  display: inline;
+}
+
+.edit-category-name-image {
+  height: 3rem;
+}
+
+.delete-category-button {
+  display: inline;
+}
+
+.delete-category-image {
+  height: 3rem;
+}
+
+.hide {
+  display: none;
+}
