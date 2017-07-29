@@ -13,10 +13,6 @@ class List extends React.Component {
     newCategoryName: ""
   };
 
-  constructor(props) {
-    super(props)
-  }
-
   updateNewCategory = (e) => {
     this.setState({
       newCategoryName: e.target.value
@@ -40,18 +36,28 @@ class List extends React.Component {
   newCategory() {
     if (this.state.addingCategory) {
       return(
-        <div className="new-category">
+        <div>
           <form onSubmit={this.handleNewCategorySubmit}>
-            <input type="text"
-                    id="new-category-input-field"
-                    value={this.state.newCategoryName}
-                    onChange={(e) => this.updateNewCategory(e)} />
-            <img className="new-category-save-image"
-                  src={save}
-                  onClick={() => this.handleNewCategorySubmit()}/>
-            <img className="new-category-cancel-image"
-                  src={cancel}
-                  onClick={() => this.clearCategoryInput()}/>
+            <div className="new-category">
+              <div className="new-category-input-container">
+                <input type="text"
+                        id="new-category-input-field"
+                        value={this.state.newCategoryName}
+                        onChange={(e) => this.updateNewCategory(e)} />
+              </div>
+              <div className="new-catgegory-save-button">
+                <img className="new-category-save-image"
+                      alt="Save new category"
+                      src={save}
+                      onClick={() => this.handleNewCategorySubmit()}/>
+              </div>
+              <div className="new-category-cancel-button">
+                <img className="new-category-cancel-image"
+                      alt="Cancel new category"
+                      src={cancel}
+                      onClick={() => this.clearCategoryInput()}/>
+              </div>
+            </div>
           </form>
         </div>
       );
@@ -63,13 +69,16 @@ class List extends React.Component {
       <Category key={"category-" + category.id}
                 category={category}
                 deleteCategoryHandler={this.props.deleteCategoryHandler}
-                updateCategoryHandler={this.props.updateCategoryHandler}/>
+                updateCategoryHandler={this.props.updateCategoryHandler}
+                list={this.props.list}
+                addItemHandler={this.props.addItemHandler}
+                updateItemHandler={this.props.updateItemHandler}
+                deleteItemHandler={this.props.deleteItemHandler}
+                />
     ));
   }
 
   render() {
-    const { list } = this.props;
-
     return (
       <div className={"list-detail-view"}>
         {this.newCategory()}
@@ -85,7 +94,10 @@ List.propTypes = {
   list: PropTypes.object.isRequired,
   addCategoryHandler: PropTypes.func.isRequired,
   deleteCategoryHandler: PropTypes.func.isRequired,
-  updateCategoryHandler: PropTypes.func.isRequired
+  updateCategoryHandler: PropTypes.func.isRequired,
+  addItemHandler: PropTypes.func.isRequired,
+  updateItemHandler: PropTypes.func.isRequired,
+  deleteItemHandler: PropTypes.func.isRequired
 };
 
 export default List;

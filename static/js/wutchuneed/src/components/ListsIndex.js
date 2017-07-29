@@ -1,23 +1,24 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-import Client from "../services/ApiClient";
-
 import upToListIcon from '../images/chevron-circle-up.svg';
 
 import '../css/lists_index.css';
 
 class ListsIndex extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   selectedClass(id) {
     if (!(this.props.currentList && this.props.currentList.categories)) {
       return "inactive"
     } else {
       return (id === this.props.currentList.id) ? 'active' : 'inactive hide'
     }
+  }
+
+  listViewActiveClass() {
+    if (this.props.currentList && this.props.currentList.categories) {
+      return "list-view-active"
+    }
+    return "list-view-inactive"
   }
 
   render() {
@@ -30,7 +31,7 @@ class ListsIndex extends React.Component {
     ));
 
     return (
-      <div className="lists-container">
+      <div className={"lists-container " + this.listViewActiveClass()}>
         <div className="list-index">
           {listRows}
         </div>

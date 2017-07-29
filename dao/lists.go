@@ -22,7 +22,7 @@ func (db Dao) GetLists() ([]List, error) {
 			log.Print(err)
 		}
 
-		l.Categories, err = db.GetCategoriesForList(l)
+		l.Categories, err = db.getCategoriesForList(l)
 		if err != nil {
 			log.Print(err)
 		}
@@ -33,22 +33,6 @@ func (db Dao) GetLists() ([]List, error) {
 	return foundLists, err
 }
 
-// func GetList(id int) (List, error) {
-// 	var list List
-// 	err := db.QueryRow("SELECT id, name, list_type, created_at, updated_at FROM lists WHERE id=?;", id).Scan(&list.Id, &list.Name, &list.Type, &list.CreatedAt, &list.UpdatedAt)
-
-// 	if err != nil {
-// 		return List{}, err
-// 	}
-
-// 	list.Categories, err = getCategoriesForList(list)
-// 	if err != nil {
-// 		return List{}, err
-// 	}
-
-// 	return list, err
-// }
-
 func (db Dao) GetList(id int) (List, error) {
 	var list List
 	err := db.Db.QueryRow("SELECT id, name, list_type, created_at, updated_at FROM lists WHERE id=?;", id).Scan(&list.Id, &list.Name, &list.Type, &list.CreatedAt, &list.UpdatedAt)
@@ -57,7 +41,7 @@ func (db Dao) GetList(id int) (List, error) {
 		return List{}, err
 	}
 
-	list.Categories, err = db.GetCategoriesForList(list)
+	list.Categories, err = db.getCategoriesForList(list)
 	if err != nil {
 		return List{}, err
 	}
@@ -95,6 +79,16 @@ func (db Dao) CreateList(body []byte) (List, error) {
 	}
 	return list, nil
 }
+
+// func (db Dao) UpdateList(body []byte) (List, error) {
+//     var list List
+//     unmarshalErr := json.Unmarshal(body, &list)
+//     if unmarshalErr != nil {
+//         log.Print(unmarshalErr)
+//         return List{}, unmarshalErr
+//     }
+
+// }
 
 func (db Dao) DeleteList(id int) (bool, error) {
 	if id <= 0 {

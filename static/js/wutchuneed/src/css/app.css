@@ -2,41 +2,48 @@
   text-align: center;
 }
 
+.app-header {
+  background-color: #222;
+  height: 10px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header.show {
+  animation-name: fade-in;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+.app-header.hidden {
+  animation-name: fade-out;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
 .app-logo {
   animation-name: app-logo-spin;
   animation-duration: 5s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  height: 80px;
+  height: 70px;
+  margin-top:5%;
+  flex-grow: 1;
 }
 
-.app-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.app-header.hide {
-  animation-name: fadeOut;
-  animation-duration: 1s;
-  animation-timing-function: linear;
-  animation-fill-mode: reverse;
-}
-
-.app-header.show {
-  animation-name: fadeIn;
-  animation-duration: 1s;
-  animation-timing-function: linear;
-  animation-fill-mode: forwards;
+.app-name {
+  font-size: 2rem;
+  font-weight: 700;
+  padding-bottom: 5px;
 }
 
 .app-intro {
   font-size: large;
-}
-
-.button-image {
-  margin-left: 10px;
 }
 
 @keyframes app-logo-spin {
@@ -44,28 +51,28 @@
   to { transform: rotate(360deg); }
 }
 
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: scaleY(0);
-        height: 0px;
-    }
-    100% {
-        opacity: 1;
-        transform: scaleY(1);
-        height: 150px;
-    }
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scaleY(0);
+    height: 0px;
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+    height: 150px;
+  }
 }
 
-@keyframes fadeOut {
-    0% {
-        opacity: 1;
-        transform: scaleY(1);
-        height: 150px;
-    }
-    100% {
-        opacity: 0;
-        transform: scaleY(0);
-        height: 0px;
-    }
+@keyframes fade-out  {
+  from {
+    opacity: 1;
+    transform: scaleY(1);
+    height: 150px;
+  }
+  to {
+    opacity: 0;
+    transform: scaleY(0);
+    height: 0px;
+  }
 }

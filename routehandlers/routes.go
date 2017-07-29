@@ -7,6 +7,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/natehershey/wutchuneed-go-again/dao"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -187,6 +188,40 @@ func PostCategoryHandler(db dao.Dao) func(w http.ResponseWriter, r *http.Request
 
 		body, _ := ioutil.ReadAll(r.Body)
 		category, err := db.CreateCategory(body)
+		switch err := err.(type) {
+		case dao.ValidationError:
+			writeErrorResponse(err.Error(), http.StatusBadRequest, w, enc)
+			return
+		}
+		if err != nil {
+			writeErrorResponse(err.Error(), http.StatusInternalServerError, w, enc)
+			return
+		}
+
+		json, err := json.Marshal(category)
+		if err != nil {
+			writeErrorResponse(err.Error(), http.StatusInternalServerError, w, enc)
+			return
+		}
+		w.Write(json)
+	})
+}
+
+func PutCategoryHandler(db dao.Dao) func(w http.ResponseWriter, r *http.Request) {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		enc := json.NewEncoder(w)
+
+		vars := mux.Vars(r)
+		id, err := strconv.Atoi(vars["id"])
+		if err != nil {
+			writeErrorResponse(err.Error(), http.StatusBadRequest, w, enc)
+			return
+		}
+
+		log.Println("r.Body: ", r.Body)
+		body, _ := ioutil.ReadAll(r.Body)
+		category, err := db.UpdateCategory(id, body)
 		if err != nil {
 			writeErrorResponse(err.Error(), http.StatusInternalServerError, w, enc)
 			return
@@ -294,6 +329,35 @@ func PostItemHandler(db dao.Dao) func(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		w.Write(json)
+	})
+}
+
+func PutItemHandler(db dao.Dao) func(w http.ResponseWriter, r *http.Request) {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		enc := json.NewEncoder(w)
+
+		vars := mux.Vars(r)
+		id, err := strconv.Atoi(vars["id"])
+		if err != nil {
+			writeErrorResponse(err.Error(), http.StatusBadRequest, w, enc)
+			return
+		}
+
+		log.Println("r.Body: ", r.Body)
+		body, _ := ioutil.ReadAll(r.Body)
+		item, err := db.UpdateItem(id, body)
+		if err != nil {
+			writeErrorResponse(err.Error(), http.StatusInternalServerError, w, enc)
+			return
+		}
+
+		json, err := json.Marshal(item)
+		if err != nil {
+			writeErrorResponse(err.Error(), http.StatusInternalServerError, w, enc)
+			return
+		}
 		w.Write(json)
 	})
 }

@@ -32,11 +32,13 @@ func main() {
 	r.HandleFunc("/api/v1/categories", routehandlers.GetCategoriesHandler(db)).Methods("GET")
 	r.HandleFunc("/api/v1/categories/{id:[0-9]+}", routehandlers.GetCategoryHandler(db)).Methods("GET")
 	r.HandleFunc("/api/v1/categories", routehandlers.PostCategoryHandler(db)).Methods("POST")
+	r.HandleFunc("/api/v1/categories/{id:[0-9]+}", routehandlers.PutCategoryHandler(db)).Methods("PUT")
 	r.HandleFunc("/api/v1/categories/{id:[0-9]+}", routehandlers.DeleteCategoryHandler(db)).Methods("DELETE")
 
 	r.HandleFunc("/api/v1/items", routehandlers.GetItemsHandler(db)).Methods("GET")
 	r.HandleFunc("/api/v1/items/{id:[0-9]+}", routehandlers.GetItemHandler(db)).Methods("GET")
 	r.HandleFunc("/api/v1/items", routehandlers.PostItemHandler(db)).Methods("POST")
+	r.HandleFunc("/api/v1/items/{id:[0-9]+}", routehandlers.PutItemHandler(db)).Methods("PUT")
 	r.HandleFunc("/api/v1/items/{id:[0-9]+}", routehandlers.DeleteItemHandler(db)).Methods("DELETE")
 
 	http.Handle("/", Middleware(r))

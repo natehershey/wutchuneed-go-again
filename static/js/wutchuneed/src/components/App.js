@@ -17,16 +17,7 @@ class App extends Component {
     if (!(this.state.currentList && this.state.currentList.categories)) {
       return "show"
     }
-    return "hide"
-  }
-
-  header = () => {
-      return(
-        <div className={"app-header " + this.headerClass()}>
-          <img src={logo} className="app-logo" alt="logo" />
-          <h1>Wutchuneed?</h1>
-        </div>
-      )
+    return "hidden"
   }
 
   showResetButtonClass = () => {
@@ -40,6 +31,23 @@ class App extends Component {
     this.setState({
       currentList: null
     })
+  }
+
+  getList = (id) => {
+    // TODO: Validate ID
+    Client.getList(id, list => {
+      this.setState({
+        currentList: list
+      });
+    });
+  }
+
+  getLists = () => {
+    Client.getLists(lists => {
+      this.setState({
+        lists: lists
+      });
+    });
   }
 
   addCategory = (name, listId, e) => {
@@ -66,7 +74,7 @@ class App extends Component {
 
   deleteCategory = (categoryId) => {
     Client.deleteCategory(categoryId, response => {
-      if (response["success"] == true) {
+      if (response["success"] === true) {
         Client.getList(this.state.currentList.id, list => {
           this.setState({
             currentList: list
@@ -78,30 +86,59 @@ class App extends Component {
     });
   }
 
+  addItem = (attributes) => {
+    console.log("Adding item: ", attributes)
+    // TODO: Validate input
+    Client.addItem(attributes, category => {
+      Client.getList(this.state.currentList.id, list => {
+        this.setState({
+          currentList: list
+        });
+      });
+    });
+  }
+
+  updateItem = (itemId, attributes) => {
+    Client.updateItem(itemId, attributes, item => {
+      Client.getList(this.state.currentList.id, list => {
+        this.setState({
+          currentList: list
+        });
+      });
+    });
+  }
+
+  deleteItem = (itemId) => {
+    Client.deleteItem(itemId, response => {
+      if (response["success"] === true) {
+        Client.getList(this.state.currentList.id, list => {
+          this.setState({
+            currentList: list
+          });
+        });
+      } else {
+        console.log("ERROR: unable to delete item ", itemId)
+      }
+    });
+  }
+
   resetInputField = (id) => {
     console.log("reset");
   }
 
-  getList = (id) => {
-    // TODO: Validate ID
-    Client.getList(id, list => {
-      this.setState({
-        currentList: list
-      });
-    });
-  }
-
-  getLists = () => {
-    Client.getLists(lists => {
-      this.setState({
-        lists: lists
-      });
-    });
-  }
 
   componentDidMount() {
     console.log("componentDidMount()")
     this.getLists()
+  }
+
+  header = () => {
+      return(
+        <div className={"app-header " + this.headerClass()}>
+          <img src={logo} className="app-logo" alt="logo" />
+          <div className="app-name">Wutchuneed?</div>
+        </div>
+      )
   }
 
   renderListsView() {
@@ -118,12 +155,14 @@ class App extends Component {
       return <List list={this.state.currentList}
                     addCategoryHandler={this.addCategory}
                     deleteCategoryHandler={this.deleteCategory}
-                    updateCategoryHandler={this.updateCategory}/>
+                    updateCategoryHandler={this.updateCategory}
+                    addItemHandler={this.addItem}
+                    updateItemHandler={this.updateItem}
+                    deleteItemHandler={this.deleteItem}/>
     }
   }
 
   render() {
-    const handleListClick = this.handleListClick
     return (
       <div className="app">
         {this.header()}

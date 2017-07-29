@@ -1,5 +1,45 @@
+.item-row {
+	width: 100%;
+  	background-color: gold;
+  	display: flex;
+	border: 1px solid;
+}
+
+.item-delete-button {
+	order: 1;
+}
+
 .item-name {
   font-size: 2rem;
-  padding-left: 3rem;
-  background-color: gold;
+  margin: 0 0 5px 1.5rem;
+  order: 2;
+}
+
+.item-delete-image {
+	height: 2rem;
+	margin: 5px 0px 0px 5px;
+}
+
+.add-to-cart-button {
+	/*order: 3;*/
+}
+
+.add-to-cart-image {
+    height: 2.4rem;
+    margin: 5px 5px 0 0;
+}
+
+.left-side {
+	display: flex;
+	width: 85%;
+}
+
+.right-side {
+	width: 15%;
+	text-align: right;
+}
+
+.in-cart {
+	text-decoration: line-through;
+	color: darkgray;
 }
