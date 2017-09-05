@@ -36,11 +36,8 @@ class ItemForm extends React.Component {
       categoryId: this.props.category.id
     }
 
-    console.log("About to call addItemHandler on submit")
-    console.log("payload: ", item)
     this.props.addItemHandler(item)
     this.props.closeMe()
-
   }
 
   render() {

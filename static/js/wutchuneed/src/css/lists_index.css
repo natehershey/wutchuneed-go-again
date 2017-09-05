@@ -63,3 +63,47 @@
 .list-index-row.hide {
   display: none;
 }
+
+.new-list {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row-reverse;
+  background-color: lightblue;
+  border-bottom: 3px solid;
+}
+
+.new-list input {
+  font-size: 2rem;
+  margin: auto;
+  float: left;
+}
+
+.new-list-input-container {
+  padding-left: 2px;
+  order: 3;
+}
+
+.new-list-save-button {
+  order: 2;
+}
+
+.new-list-save-image {
+  margin: 3px 2px 0 2px;
+  height: 2.8rem;
+}
+
+.new-list-cancel-button {
+  order: 1;
+}
+
+.new-list-cancel-image {
+  margin: 5px 3px 0px 3px;
+  height: 2.5rem;
+}
+
+#new-list-input-field {
+  border: 2px solid;
+  border-radius: 5px;
+  width: 95%;
+  margin: 3px 0 3px 3px;
+}

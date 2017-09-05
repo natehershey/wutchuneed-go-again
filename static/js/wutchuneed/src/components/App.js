@@ -10,14 +10,15 @@ import logo from '../images/cart.svg';
 class App extends Component {
   state = {
     lists: [],
-    currentList: {}
+    currentList: {},
+    fetchingList: false
   };
 
   headerClass = () => {
-    if (!(this.state.currentList && this.state.currentList.categories)) {
-      return "show"
+    if (this.state.currentList && this.state.currentList.categories) {
+      return "hidden"
     }
-    return "hidden"
+    return "show"
   }
 
   showResetButtonClass = () => {
@@ -35,9 +36,13 @@ class App extends Component {
 
   getList = (id) => {
     // TODO: Validate ID
+    this.setState({
+      fetchingList: true
+    });
     Client.getList(id, list => {
       this.setState({
-        currentList: list
+        currentList: list,
+        fetchingList: false
       });
     });
   }
@@ -46,6 +51,19 @@ class App extends Component {
     Client.getLists(lists => {
       this.setState({
         lists: lists
+      });
+    });
+  }
+
+  addList = (name, category) => {
+    Client.addList(name, category, list => {
+      var newLists = this.state.lists;
+      newLists.push(list);
+      console.log(newLists)
+      console.log(list)
+      this.setState({
+        lists: newLists,
+        currentList: list
       });
     });
   }
@@ -59,7 +77,6 @@ class App extends Component {
         });
       });
     });
-    this.resetInputField()
   }
 
   updateCategory = (categoryId, attributes) => {
@@ -87,7 +104,6 @@ class App extends Component {
   }
 
   addItem = (attributes) => {
-    console.log("Adding item: ", attributes)
     // TODO: Validate input
     Client.addItem(attributes, category => {
       Client.getList(this.state.currentList.id, list => {
@@ -122,13 +138,7 @@ class App extends Component {
     });
   }
 
-  resetInputField = (id) => {
-    console.log("reset");
-  }
-
-
   componentDidMount() {
-    console.log("componentDidMount()")
     this.getLists()
   }
 
@@ -142,7 +152,8 @@ class App extends Component {
   }
 
   renderListsView() {
-    return <ListsIndex lists={this.state.lists}
+    return <ListsIndex addListHandler={this.addList}
+                        lists={this.state.lists}
                         currentList={this.state.currentList}
                         onListClick={this.getList}
                         resetCurrentList={this.resetCurrentList}

@@ -18,7 +18,8 @@ class Category extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      showChildren: true,
+      forceHideChildren: false,
+      autoHideChildren: false,
       inEditMode: false,
       editingCategoryName: false,
       newCategoryName: "",
@@ -29,10 +30,9 @@ class Category extends React.Component {
     }
   }
 
-  toggleShowChildren = () => {
-    console.log("toggle")
+  toggleForceHideChildren = () => {
     this.setState({
-      showChildren: !this.state.showChildren
+      forceHideChildren: !this.state.forceHideChildren,
     })
   }
 
@@ -55,10 +55,7 @@ class Category extends React.Component {
   }
 
   categoryNameFieldstrikethroughClass = () => {
-    if (this.props.category.items.every(x => x.status === "in_cart")) {
-      this.setState({
-        showChildren: false
-      })
+    if (this.props.category.items.every(x => x.status === "in_cart") && this.props.category.items.length > 0) {
       return "strikethrough"
     }
   }
@@ -147,7 +144,7 @@ class Category extends React.Component {
   // TODO: 500 error when submitting a new name twice
   updateCategoryName = (categoryId) => {
     this.props.updateCategoryHandler(categoryId, {name: this.state.newCategoryName}, category => {
-      console.log("callback")
+      // console.log("callback")
     });
     this.setState({
       newCategoryName: "",
@@ -175,7 +172,7 @@ class Category extends React.Component {
   }
 
   items() {
-    if(this.state.showChildren) {
+    if(!(this.state.forceHideChildren || this.state.autoHideChildren)) {
       return this.props.category.items.map((item, idx) => (
         <Item key={"item-" + item.id}
               item={item}
@@ -207,7 +204,7 @@ class Category extends React.Component {
         <div className="category-row">
 
           <div className={"category-name " + this.categoryNameShowHideClass() + " " + this.categoryNameFieldstrikethroughClass()}
-                onClick={() => this.toggleShowChildren()}>
+                onClick={() => this.toggleForceHideChildren()}>
             {category.name}
           </div>
 

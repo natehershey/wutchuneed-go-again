@@ -77,6 +77,9 @@ func (db Dao) CreateList(body []byte) (List, error) {
 		log.Print(queryErr)
 		return List{}, queryErr
 	}
+	if list.Categories == nil {
+		list.Categories = []Category{}
+	}
 	return list, nil
 }
 

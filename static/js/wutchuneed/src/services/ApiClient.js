@@ -16,6 +16,20 @@ function getList(id, cb) {
     .then(cb);
 }
 
+function addList(name, type, cb) {
+  return fetch(`api/v1/lists`, {
+    method: 'POST',
+    accept: "application/json",
+    body: JSON.stringify({
+      Name: name,
+      Type: type
+    })
+  })
+    .then(checkStatus)
+    .then(parseJSON)
+    .then(cb);
+}
+
 function addCategory(name, listId, cb) {
   return fetch("api/v1/categories", {
     method: "POST",
@@ -48,8 +62,6 @@ function deleteCategory(id, cb) {
 }
 
 function updateCategory(id, attributes, cb) {
-  console.log(attributes);
-
   return fetch(`api/v1/categories/${id}`, {
     method: "PUT",
     headers: {
@@ -64,7 +76,6 @@ function updateCategory(id, attributes, cb) {
 }
 
 function addItem(attributes, cb) {
-  console.log("attributes in ApiCLient: ", attributes)
   // TODO: Validate attributes
 
   return fetch(`api/v1/items`, {
@@ -81,9 +92,6 @@ function addItem(attributes, cb) {
 }
 
 function updateItem(id, attributes, cb) {
-  // TODO: Implement in API and here
-  console.log(attributes);
-
   return fetch(`api/v1/items/${id}`, {
     method: "PUT",
     headers: {
@@ -98,8 +106,6 @@ function updateItem(id, attributes, cb) {
 }
 
 function deleteItem(itemId, cb) {
-  console.log(itemId)
-
   return fetch(`api/v1/items/${itemId}`, {
     method: "DELETE",
     headers: {
@@ -127,6 +133,6 @@ function parseJSON(response) {
   return response.json();
 }
 
-const Client = { getLists, getList, addCategory, deleteCategory, updateCategory, addItem, updateItem, deleteItem };
+const Client = { getLists, getList, addList, addCategory, deleteCategory, updateCategory, addItem, updateItem, deleteItem };
 
 export default Client;
